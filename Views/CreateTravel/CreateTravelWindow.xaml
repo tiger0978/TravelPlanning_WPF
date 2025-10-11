@@ -1,0 +1,32 @@
+﻿<Window x:Class="TravelPlanning.Views.CreateTravelWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelPlanning.Views"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        mc:Ignorable="d"
+        Title="CreateTravelWindow" Height="380" Width="300">
+    <Border Padding="15">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" >
+                <ui:TextBlock VerticalAlignment="Center" Width="80" Margin="0,0,10,0" Text="標題" FontWeight="Bold"/>
+                <ui:TextBox Width="150" Text="{Binding Title}"  Foreground="Black" Background="LightBlue"/>
+            </StackPanel>
+            <StackPanel Margin="0,15,0,0" Orientation="Horizontal" >
+                <ui:TextBlock VerticalAlignment="Center" Width="80" Margin="0,0,10,0" FontWeight="Bold">天數</ui:TextBlock>
+                <ui:TextBox Width="150" Text="{Binding Days}" Background="LightBlue"></ui:TextBox>
+            </StackPanel>
+            <StackPanel Margin="0,15,0,0" Orientation="Horizontal" >
+                <ui:TextBlock VerticalAlignment="Center" Width="80" Margin="0,0,10,0" FontWeight="Bold">日期</ui:TextBlock>
+                <ui:CalendarDatePicker Content="{Binding StartedDate}" ></ui:CalendarDatePicker>
+            </StackPanel>
+            <StackPanel Margin="0,15,0,0" Orientation="Horizontal" >
+                <ui:TextBlock VerticalAlignment="Center" Width="80" Margin="0,0,10,0" FontWeight="Bold">封面圖片</ui:TextBlock>
+                <ui:Image Width="150" Source="{Binding Cover}" Height="130"></ui:Image>
+            </StackPanel>
+            <ui:Button Content="新建旅遊" Appearance="Dark" Width="90" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Border>
+
+</Window>

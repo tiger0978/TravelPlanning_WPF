@@ -10,23 +10,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TravelPlanning.Views.CreateTravel;
-using Wpf.Ui.Appearance;
+using TravelPlanning.Attributes;
 
-namespace TravelPlanning.Views
+namespace TravelPlanning.Views.Pages.FavoriteTravel
 {
     /// <summary>
-    /// CreateTravelWindow.xaml 的互動邏輯
+    /// FavoriteTravel.xaml 的互動邏輯
     /// </summary>
-    public partial class CreateTravelWindow : Window
+    [NavigationItem("我的最愛", Wpf.Ui.Controls.SymbolRegular.HeartCircle24, 2)]
+    public partial class FavoriteTravel : Page
     {
-        public CreateTravelContext Context { get; set; } = new CreateTravelContext();    
-        public CreateTravelWindow()
+        public FavoriteTravel()
         {
             InitializeComponent();
-
-            this.DataContext = Context;
         }
     }
 }

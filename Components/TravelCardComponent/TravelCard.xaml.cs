@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TravelPlanning.Views
+namespace TravelPlanning.Components.TravelCardComponent
 {
     /// <summary>
-    /// MainTravelWindow.xaml 的互動邏輯
+    /// TravelCard.xaml 的互動邏輯
     /// </summary>
-    public partial class MainTravelWindow : Window
+    public partial class TravelCard : UserControl
     {
-        public MainTravelWindow()
+        public TravelCard()
         {
             InitializeComponent();
         }

@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
+using System.Xml;
 using TravelPlanning.Models.Entities;
 
 namespace TravelPlanning.Respositories.Models.Entities
@@ -21,8 +22,11 @@ namespace TravelPlanning.Respositories.Models.Entities
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+           
             modelBuilder.Entity<TravelPlan>()
                 .Property(e => e.Cover)
+                
                 .IsUnicode(false);
         }
     }

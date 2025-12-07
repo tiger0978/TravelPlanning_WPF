@@ -25,7 +25,7 @@ namespace TravelPlanning.Views.Pages
     /// CreateTravel.xaml 的互動邏輯
     /// </summary>
     [NavigationItem("新增旅程", SymbolRegular.AddSquare24, 1)]
-    public partial class CreateTravel : Page, ICreateTravelView
+    public partial class CreateTravel : Page
     {
 
         public CreateTravel(IPresenterFactory presenterFactory)

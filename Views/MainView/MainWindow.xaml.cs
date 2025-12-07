@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoogleMap.SDK.Contract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelPlanning.Attributes;
 using TravelPlanning.Views.MainTravel;
+using TravelPlanning.Views.Pages.FavoriteTravel;
 using TravelPlanning.Views.Pages.Home;
 using Wpf.Ui;
 using Wpf.Ui.Abstractions;
@@ -41,7 +43,7 @@ namespace TravelPlanning.Views
                 return navigationItem;
             }).Where(x=>x != null).ToList();
             viewModel.InitialNavigationItems(navigationItems);
-            Loaded += (s, e) => navigationView.Navigate(typeof(Home));
+            Loaded += (s, e) => navigationView.Navigate(typeof(FavoriteTravel));
             navigationService.SetNavigationControl(navigationView);
         }
 

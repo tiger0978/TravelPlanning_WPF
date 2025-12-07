@@ -14,7 +14,6 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        
         <ui:TitleBar Title="建立旅遊計畫" Grid.Row="0"/>
         <ui:NavigationView 
             x:Name="navigationView"

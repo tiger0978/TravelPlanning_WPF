@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              Height="340" 
              Width="296"
@@ -37,7 +38,32 @@
                 </ThicknessAnimation.EasingFunction>
             </ThicknessAnimation>
         </Storyboard>
-        
+
+        <Storyboard x:Key="DeleteMouseEnter">
+            <DoubleAnimation Storyboard.TargetName="DeleteButton"
+                     Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                     To="1.08" Duration="0:0:0.15"/>
+            <DoubleAnimation Storyboard.TargetName="DeleteButton"
+                     Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                     To="1.08" Duration="0:0:0.15"/>
+            <ColorAnimation Storyboard.TargetName="DeleteButtonBg"
+                    Storyboard.TargetProperty="(SolidColorBrush.Color)"
+                    To="DarkRed" Duration="0:0:0.15"/>
+        </Storyboard>
+
+        <Storyboard x:Key="DeleteMouseLeave">
+            <DoubleAnimation Storyboard.TargetName="DeleteButton"
+                     Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                     To="1" Duration="0:0:0.15"/>
+            <DoubleAnimation Storyboard.TargetName="DeleteButton"
+                     Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                     To="1" Duration="0:0:0.15"/>
+            <ColorAnimation Storyboard.TargetName="DeleteButtonBg"
+                    Storyboard.TargetProperty="(SolidColorBrush.Color)"
+                    To="#4D000000" Duration="0:0:0.15"/>
+        </Storyboard>
+
+
         <Storyboard x:Key="MouseLeaveStoryboard">
             <DoubleAnimation Storyboard.TargetName="CardBorder"
                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
@@ -73,6 +99,13 @@
         <EventTrigger RoutedEvent="MouseLeave">
             <BeginStoryboard Storyboard="{StaticResource MouseLeaveStoryboard}"/>
         </EventTrigger>
+        <EventTrigger SourceName="DeleteButton" RoutedEvent="MouseEnter">
+            <BeginStoryboard Storyboard="{StaticResource DeleteMouseEnter}"/>
+        </EventTrigger>
+
+        <EventTrigger SourceName="DeleteButton" RoutedEvent="MouseLeave">
+            <BeginStoryboard Storyboard="{StaticResource DeleteMouseLeave}"/>
+        </EventTrigger>
     </UserControl.Triggers>
     
     <Border x:Name="CardBorder" 
@@ -90,7 +123,6 @@
                             BlurRadius="16" 
                             Opacity="0.4"/>
         </Border.Effect>
-        
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="190"/>
@@ -123,16 +155,38 @@
                 </Viewbox>
                 
                 <!-- 右上角標籤 -->
-                <Border Background="#1976D2"
-                        CornerRadius="4"
-                        Padding="8,4"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                        Margin="12">
-                    <TextBlock Text="精選"
-                               Foreground="White"
-                               FontSize="11"
-                               FontWeight="SemiBold"/>
+                <Border x:Name="DeleteButton"
+                    Width="32"
+                    Height="32"
+                    CornerRadius="16"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="12"
+                    Cursor="Hand"
+                    RenderTransformOrigin="0.5,0.5">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding DataContext.DeleteCommand,    
+                                RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Border.Background>
+                        <SolidColorBrush x:Name="DeleteButtonBg" Color="#4D000000"/>
+                    </Border.Background>
+                    <Border.RenderTransform>
+                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                    </Border.RenderTransform>
+                    <Border.Effect>
+                        <DropShadowEffect Color="#000000"
+                            ShadowDepth="2"
+                            BlurRadius="6"
+                            Opacity="0.4"/>
+                    </Border.Effect>
+                    <ui:SymbolIcon Symbol="Delete24"
+                        Foreground="White"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="16"/>  
                 </Border>
             </Grid>
             

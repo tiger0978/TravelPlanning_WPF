@@ -23,6 +23,12 @@ namespace TravelPlanning.Respositories.Models.DAOs
             Days = days;
             Cover = cover;
         }
+
+        public TravelPlanDAO(Guid id)
+        {
+            Id = id;
+        }
+
         public TravelPlanDAO() { }
 
         public Guid Id { get; set; }
@@ -33,8 +39,6 @@ namespace TravelPlanning.Respositories.Models.DAOs
         public int Days { get; set; }
         public string Cover { get; set; }
         public List<TravelDayDAO> TravelDays { get; set; }
-
-
 
     }
 }

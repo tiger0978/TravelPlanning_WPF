@@ -5,11 +5,12 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TravelPlanning.Views.Pages.Home"
       xmlns:component="clr-namespace:TravelPlanning.Components.TravelCardComponent"
-      mc:Ignorable="d" 
+
+    mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Home">
 
-    
+    <Grid>
         <ItemsControl ItemsSource="{Binding TravelCards}" >
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -22,5 +23,6 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-
+        <ContentPresenter x:Name="DialogHost"/>
+    </Grid>
 </Page>

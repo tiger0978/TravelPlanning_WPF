@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using TravelPlanning.Contracts;
 using TravelPlanning.Contracts.DTOs;
+using TravelPlanning.EventHandlers;
 using TravelPlanning.Extensions;
 using TravelPlanning.Respositories;
 using TravelPlanning.Respositories.Models.DAOs;
@@ -25,16 +26,18 @@ namespace TravelPlanning.Presenters
 
         public async Task AddTravelPlan(TravelPlanDTO travelPlanDto)
         {
-            int newWidth = 190;
-            int newHeight = 340;
+            int newWidth = 340;
+            int newHeight = 190;
             var priveiwImage = travelPlanDto.Cover.Resize(newWidth, newHeight);
-            priveiwImage.SaveJpeg(Path.Combine(ImageRootPath, $"cover_{priveiwImage.ToBase64()}"),80);
+            var imageName = $"{Guid.NewGuid().ToString()}.jpeg";  
+            priveiwImage.SaveJpeg(Path.Combine(ImageRootPath, $"cover_{imageName}"), 80);
 
-            string cover = travelPlanDto.Cover.ToBase64();
+            string cover = Path.Combine(ImageRootPath, imageName);
             travelPlanDto.Cover.SaveJpeg(Path.Combine(ImageRootPath, cover), 80);
 
-            var travelPlan = new TravelPlanDAO(travelPlanDto.Title, travelPlanDto.Description, travelPlanDto.StartedDate, travelPlanDto.Days, cover);
-            await _travelRepository.AddTravelPlanAsync(travelPlan);
+            var travelPlan = new TravelPlanDAO(travelPlanDto.Title, travelPlanDto.Description, travelPlanDto.StartDate, travelPlanDto.Days, cover);
+            var result = await _travelRepository.AddTravelPlanAsync(travelPlan);
+            TravelCardHandler.RenderTravelCard(new TravelPlanDTO(travelPlan.Id, travelPlan.Title, travelPlan.StartDate, travelPlan.Cover));
         }
     }
 }

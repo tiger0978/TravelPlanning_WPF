@@ -23,6 +23,7 @@ namespace TravelPlanning.Views.CreateTravels
         public DateTime StartedDate { get; set; } = DateTime.Now;
         public BitmapImage Cover { get; set; } = new BitmapImage(new Uri("pack://application:,,,/TravelPlanning;component/Resources/Image/Upload.png", UriKind.Absolute));
         public ICommand CreateTravelCommand { get; set; }
+        public ICommand SelectImageCommand { get; set; }
 
         public CreateTravelContext(IPresenterFactory presenterFactory) 
         {
@@ -32,7 +33,22 @@ namespace TravelPlanning.Views.CreateTravels
                 var travelPlanDto = new TravelPlanDTO(Title, Description, Days, StartedDate, Cover);
                 presenter.AddTravelPlan(travelPlanDto);
             });
-        }
 
+            SelectImageCommand = new RelayCommand(() => 
+            {
+                SelectCover();
+            });
+        }
+        private void SelectCover()
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.Filter = "Images|*.png;*.jpg;*.jpeg;*.bmp";
+
+            if (dialog.ShowDialog() == true)
+            {
+                BitmapImage img = new BitmapImage(new Uri(dialog.FileName));
+                Cover = img;
+            }
+        }
     }
 }

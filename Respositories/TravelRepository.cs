@@ -31,6 +31,14 @@ namespace TravelPlanning.Respositories
             return result;
         }
 
+        public async Task<bool> DeleteTravelPlanByIdAsync(Guid id)
+        {
+            var plan = await _db.TravelPlans.FirstOrDefaultAsync(x => x.Id == id);
+            _db.TravelPlans.Remove(plan);
+            var result = await _db.SaveChangesAsync();
+            return result != 0; 
+        }
+
         public async Task<List<TravelPlaceDAO>> GetTravelPlacesAsync(Guid travelPlanId)
         {
             var plan = await _db.TravelPlans.FirstOrDefaultAsync(x => x.Id == travelPlanId);

@@ -30,7 +30,7 @@ namespace TravelPlanning
     /// </summary>
     public partial class App : Application
     {
-        private async void Application_Startup(object sender, StartupEventArgs e)
+        private void Application_Startup(object sender, StartupEventArgs e)
         {
             var services = new ServiceCollection();
             services.AddGoogleMapCoreRegistration();
@@ -40,6 +40,7 @@ namespace TravelPlanning
             services.AddTransient<DatabaseContext, DatabaseContext>();
             services.AddNavigationViewPageProvider();
             services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<IContentDialogService, ContentDialogService>();
             // services.AddSingleton<IPageService>
             services.AddPage();
 

@@ -1,4 +1,5 @@
-﻿using IoC_Container;
+﻿using GoogleMap.SDK.Core.Utility;
+using IoC_Container;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,11 @@ using System.Windows.Shapes;
 using TravelPlanning.Attributes;
 using TravelPlanning.Components.TravelCardComponent;
 using TravelPlanning.Contracts;
+using TravelPlanning.EventHandlers;
 using TravelPlanning.Presenters;
 using TravelPlanning.Respositories.Models.DAOs;
 using TravelPlanning.Views.CreateTravels;
+using Wpf.Ui;
 
 namespace TravelPlanning.Views.Pages.Home
 {
@@ -27,25 +30,14 @@ namespace TravelPlanning.Views.Pages.Home
     /// </summary>
     [NavigationItem("首頁", Wpf.Ui.Controls.SymbolRegular.Home24,0)]
     /// 
-    public partial class Home : Page, IHomeView
+    public partial class Home : Page
     {
-        public HomeContext Context { get; set; } = new HomeContext();
-
-        public Home(IPresenterFactory presenterFactory)
+        public Home(IPresenterFactory presenterFactory, IContentDialogService dialogService)
         {
             InitializeComponent();
-            this.DataContext = Context;
-            var presenter = presenterFactory.CreatePresneter<IHomePresenter, IHomeView>(this);
-            presenter.GetTravelCards();
+            dialogService.SetDialogHost(DialogHost);
+            this.DataContext = new HomeContext(presenterFactory, dialogService);
+
         }
-
-
-        public void RenderPage(List<TravelPlanDAO> plans)
-        {
-            var cards = plans.Select(x => new TravelCardViewModel(x.Title, x.StartDate, x.Cover)).ToList();
-            Context.RenderTravelCards(cards);
-        }
-
-
     }
 }

@@ -15,7 +15,8 @@ namespace TravelPlanning.Models.Entities
             TravelDays = new HashSet<TravelDay>();
         }
 
-        public Guid Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid? Id { get; set; }
 
         [Required]
         [StringLength(200)]
@@ -32,9 +33,11 @@ namespace TravelPlanning.Models.Entities
 
         public int Days { get; set; }
 
-        public DateTime? CreatedTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedTime { get; set; }
 
-        public bool? IsDeleted { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public bool IsDeleted { get; set; } = false;
 
         [Column(TypeName = "text")]
         public string Cover { get; set; }

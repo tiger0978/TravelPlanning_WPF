@@ -13,8 +13,8 @@ namespace TravelPlanning.Respositories
         Task<List<TravelPlanDAO>> GetTravelPlansAsync();
         Task<TravelPlanDAO> GetTravelPlanByIdAsync(Guid travelPlanId);
         Task<List<TravelPlaceDAO>> GetTravelPlacesAsync(Guid travelPlanId);
-        Task<TravelPlanDAO> AddTravelPlanAsync(TravelPlanDAO travelPlan);  
-    
+        Task<TravelPlanDAO> AddTravelPlanAsync(TravelPlanDAO travelPlan); 
+        Task<bool> DeleteTravelPlanByIdAsync(Guid id);
 
     }
 }

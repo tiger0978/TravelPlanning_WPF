@@ -55,16 +55,16 @@
       <HintPath>packages\GMap.NET.WinPresentation.2.1.7\lib\net472\GMap.NET.WindowsPresentation.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMap.SDK.Contract, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\GoogleMap.SDK.WPF.1.0.2.3\lib\net472\GoogleMap.SDK.Contract.dll</HintPath>
+      <HintPath>packages\GoogleMap.SDK.WPF.1.0.3.7\lib\net472\GoogleMap.SDK.Contract.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMap.SDK.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\GoogleMap.SDK.WPF.1.0.2.3\lib\net472\GoogleMap.SDK.Core.dll</HintPath>
+      <HintPath>packages\GoogleMap.SDK.WPF.1.0.3.7\lib\net472\GoogleMap.SDK.Core.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMap.SDK.UI.WPF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\GoogleMap.SDK.WPF.1.0.2.3\lib\net472\GoogleMap.SDK.UI.WPF.dll</HintPath>
+      <HintPath>packages\GoogleMap.SDK.WPF.1.0.3.7\lib\net472\GoogleMap.SDK.UI.WPF.dll</HintPath>
     </Reference>
     <Reference Include="IoC_Container, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\GoogleMap.SDK.WPF.1.0.2.3\lib\net472\IoC_Container.dll</HintPath>
+      <HintPath>packages\GoogleMap.SDK.WPF.1.0.3.7\lib\net472\IoC_Container.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.6, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.9.0.6\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -112,8 +112,8 @@
       <HintPath>packages\SQLitePCLRaw.core.2.1.11\lib\netstandard2.0\SQLitePCLRaw.core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -130,15 +130,15 @@
     <Reference Include="System.IO.Pipelines, Version=9.0.0.6, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.IO.Pipelines.9.0.6\lib\net462\System.IO.Pipelines.dll</HintPath>
     </Reference>
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    <Reference Include="System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.6.3\lib\net462\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    <Reference Include="System.Numerics.Vectors, Version=4.1.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.6.1\lib\net462\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.1.2\lib\net462\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -178,6 +178,7 @@
     </Reference>
     <Reference Include="Wpf.Ui.DependencyInjection, Version=4.0.0.0, Culture=neutral, PublicKeyToken=11f9f5cc97b3ffd6, processorArchitecture=MSIL">
       <HintPath>packages\WPF-UI.DependencyInjection.4.0.3\lib\net472\Wpf.Ui.DependencyInjection.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -186,16 +187,40 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Attributes\NavigationItemAttribute.cs" />
-    <Compile Include="Components\TravelCardComponent\TravelCard.xaml.cs">
-      <DependentUpon>TravelCard.xaml</DependentUpon>
+    <Compile Include="Components\GMap\GoogleMapComponent.xaml.cs">
+      <DependentUpon>GoogleMapComponent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\TravelCardComponent\TravelCardViewModel.cs" />
+    <Compile Include="Components\GMap\GoolgeMapContext.cs" />
+    <Compile Include="Components\MapPanels\MapPanelComponent.xaml.cs">
+      <DependentUpon>MapPanelComponent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MapPanels\SavePlacePanel\SavePlacePanelComponent.xaml.cs">
+      <DependentUpon>SavePlacePanelComponent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MapPanels\SavePlacePanel\SavePlacePanelContext.cs" />
+    <Compile Include="Components\MapPanels\SearchPanel\SearchPanelComponent.xaml.cs">
+      <DependentUpon>SearchPanelComponent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MapPanels\SearchPanel\SearchPanelContext.cs" />
+    <Compile Include="Components\MapPanels\MapPanelContext.cs" />
+    <Compile Include="Components\TravelCard\TravelCardComponent.xaml.cs">
+      <DependentUpon>TravelCardComponent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\TravelCard\TravelCardContext.cs" />
     <Compile Include="Contracts\CreateTravelContract.cs" />
+    <Compile Include="Contracts\DTOs\FavoriteTravelDTO.cs" />
     <Compile Include="Contracts\DTOs\TravelPlanDTO.cs" />
+    <Compile Include="Contracts\FavoriteTravelContract.cs" />
     <Compile Include="Contracts\HomeContract.cs" />
+    <Compile Include="Converters\StarConverter.cs" />
     <Compile Include="EventHandlers\TravelCardHandler.cs" />
     <Compile Include="Extensions\BitmapImageExtension.cs" />
     <Compile Include="Extensions\NavigationExtension.cs" />
+    <Compile Include="Models\Enums\StartType.cs" />
+    <Compile Include="Models\GridLengthAnimation.cs" />
+    <Compile Include="Models\NavigationPageItem.cs" />
+    <Compile Include="Presenters\FavoriteTravelPresenter.cs" />
+    <Compile Include="Respositories\IMapPlaceRepository.cs" />
     <Compile Include="Respositories\Models\DAOs\MapLayerDAO.cs" />
     <Compile Include="Respositories\Models\DAOs\MapPlaceDAO.cs" />
     <Compile Include="Respositories\Models\DAOs\TravelDayDAO.cs" />
@@ -212,12 +237,11 @@
     <Compile Include="Respositories\IMapLayerRepository.cs" />
     <Compile Include="Respositories\ITravelRepository.cs" />
     <Compile Include="Respositories\MapLayerRepository.cs" />
+    <Compile Include="Respositories\MapPlaceRepository.cs" />
     <Compile Include="Respositories\TravelRepository.cs" />
-    <Compile Include="Test.xaml.cs">
-      <DependentUpon>Test.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Utilties\NavigationPageProvider.cs" />
     <Compile Include="Utilties\RelayCommand.cs" />
-    <Compile Include="Views\MainView\MainViewModel.cs" />
+    <Compile Include="Views\MainView\MainWindowContext.cs" />
     <Compile Include="Views\Pages\CreateTravels\CreateTravelContext.cs" />
     <Compile Include="Views\MainView\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -226,14 +250,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\Pages\CreateTravels\CreateTravel.xaml.cs">
-      <DependentUpon>CreateTravel.xaml</DependentUpon>
+    <Compile Include="Views\Pages\CreateTravels\CreateTravelPage.xaml.cs">
+      <DependentUpon>CreateTravelPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Pages\FavoriteTravel\FavoriteTravel.xaml.cs">
-      <DependentUpon>FavoriteTravel.xaml</DependentUpon>
+    <Compile Include="Views\Pages\FavoriteTravel\FavoriteTravelPage.xaml.cs">
+      <DependentUpon>FavoriteTravelPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Pages\Home\Home.xaml.cs">
-      <DependentUpon>Home.xaml</DependentUpon>
+    <Compile Include="Views\Pages\FavoriteTravel\FavoriteTravelContext.cs" />
+    <Compile Include="Views\Pages\Home\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\Home\HomeContext.cs" />
     <Compile Include="Views\Pages\PlaceSearch\PlaceSearch.xaml.cs">
@@ -242,11 +267,23 @@
     <Compile Include="Views\TestWindow.xaml.cs">
       <DependentUpon>TestWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Components\TravelCardComponent\TravelCard.xaml">
+    <Page Include="Components\GMap\GoogleMapComponent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Test.xaml">
+    <Page Include="Components\MapPanels\MapPanelComponent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\MapPanels\SavePlacePanel\SavePlacePanelComponent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\MapPanels\SearchPanel\SearchPanelComponent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\TravelCard\TravelCardComponent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -254,15 +291,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Pages\CreateTravels\CreateTravel.xaml">
+    <Page Include="Views\Pages\CreateTravels\CreateTravelPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Pages\FavoriteTravel\FavoriteTravel.xaml">
+    <Page Include="Views\Pages\FavoriteTravel\FavoriteTravelPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Pages\Home\Home.xaml">
+    <Page Include="Views\Pages\Home\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -315,12 +352,12 @@
       <ErrorText>此專案參考這部電腦上所缺少的 NuGet 套件。請啟用 NuGet 套件還原，以下載該套件。如需詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的檔案是 {0}。</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.5\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.5\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets'))" />
-    <Error Condition="!Exists('packages\Fody.6.6.4\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Fody.6.6.4\build\Fody.targets'))" />
     <Error Condition="!Exists('packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props'))" />
     <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
     <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('packages\Fody.6.8.2\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Fody.6.8.2\build\Fody.targets'))" />
   </Target>
   <Import Project="packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.5\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.5\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
-  <Import Project="packages\Fody.6.6.4\build\Fody.targets" Condition="Exists('packages\Fody.6.6.4\build\Fody.targets')" />
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="packages\Fody.6.8.2\build\Fody.targets" Condition="Exists('packages\Fody.6.8.2\build\Fody.targets')" />
 </Project>

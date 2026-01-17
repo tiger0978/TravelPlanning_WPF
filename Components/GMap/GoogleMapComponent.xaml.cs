@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoogleMap.SDK.Contract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,18 +11,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TravelPlanning
+namespace TravelPlanning.Components.GMap
 {
     /// <summary>
-    /// Test.xaml 的互動邏輯
+    /// GoogleMap.xaml 的互動邏輯
     /// </summary>
-    public partial class Test : Window
+    public partial class GoogleMapComponent : UserControl
     {
-        public Test()
+        public GoogleMapComponent(IGMap map)
         {
             InitializeComponent();
+            GoolgeMapContext model = new GoolgeMapContext();
+            DataContext = model;
+            MapContainer.Children.Add((UserControl)map);
         }
+
     }
 }

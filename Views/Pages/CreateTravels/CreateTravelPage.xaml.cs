@@ -1,34 +1,18 @@
 ﻿using IoC_Container;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TravelPlanning.Attributes;
-using TravelPlanning.Contracts;
-using TravelPlanning.Contracts.DTOs;
-using TravelPlanning.Views.CreateTravels;
 using Wpf.Ui.Controls;
 
-namespace TravelPlanning.Views.Pages
+namespace TravelPlanning.Views.Pages.CreateTravels
 {
     /// <summary>
     /// CreateTravel.xaml 的互動邏輯
     /// </summary>
     [NavigationItem("新增旅程", SymbolRegular.AddSquare24, 1)]
-    public partial class CreateTravel : Page
+    public partial class CreateTravelPage : Page
     {
 
-        public CreateTravel(IPresenterFactory presenterFactory)
+        public CreateTravelPage(IPresenterFactory presenterFactory)
         {
             InitializeComponent();
             this.DataContext = new CreateTravelContext(presenterFactory);

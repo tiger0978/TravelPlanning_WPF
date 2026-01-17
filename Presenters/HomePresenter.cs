@@ -13,9 +13,9 @@ namespace TravelPlanning.Presenters
 {
     public class HomePresenter : IHomePresenter
     {
-        private IHomeView _homeView;
+        private IHomePage _homeView;
         private ITravelRepository _travelRepository;
-        public HomePresenter(IHomeView homeView, ITravelRepository travelRepository) 
+        public HomePresenter(IHomePage homeView, ITravelRepository travelRepository) 
         {
             _homeView = homeView;
             _travelRepository = travelRepository;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IoC_Container.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,11 +10,12 @@ using Wpf.Ui.Controls;
 
 namespace TravelPlanning.Views.MainTravel
 {
-    public class MainViewModel
+    [Transient]
+    public class MainWindowContext
     {
         public ObservableCollection<NavigationViewItem> MenuItems { get; }
 
-        public MainViewModel()
+        public MainWindowContext()
         {
             MenuItems = new ObservableCollection<NavigationViewItem>();
         }

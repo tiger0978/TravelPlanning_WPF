@@ -8,7 +8,7 @@ using TravelPlanning.Respositories.Models.DAOs;
 
 namespace TravelPlanning.Contracts
 {
-    public interface IHomeView 
+    public interface IHomePage
     {
         void RenderPage(List<TravelPlanDTO> plans);
     }

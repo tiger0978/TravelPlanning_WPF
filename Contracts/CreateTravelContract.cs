@@ -7,7 +7,7 @@ using TravelPlanning.Contracts.DTOs;
 
 namespace TravelPlanning.Contracts
 {
-    public interface ICreateTravelView 
+    public interface ICreateTravelPage 
     {
 
     }

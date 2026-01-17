@@ -15,12 +15,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelPlanning.Attributes;
-using TravelPlanning.Components.TravelCardComponent;
 using TravelPlanning.Contracts;
 using TravelPlanning.EventHandlers;
 using TravelPlanning.Presenters;
 using TravelPlanning.Respositories.Models.DAOs;
-using TravelPlanning.Views.CreateTravels;
+using TravelPlanning.Views.Pages.CreateTravels;
 using Wpf.Ui;
 
 namespace TravelPlanning.Views.Pages.Home
@@ -30,14 +29,13 @@ namespace TravelPlanning.Views.Pages.Home
     /// </summary>
     [NavigationItem("首頁", Wpf.Ui.Controls.SymbolRegular.Home24,0)]
     /// 
-    public partial class Home : Page
+    public partial class HomePage : Page
     {
-        public Home(IPresenterFactory presenterFactory, IContentDialogService dialogService)
+        public HomePage(IPresenterFactory presenterFactory, IContentDialogService dialogService)
         {
             InitializeComponent();
             dialogService.SetDialogHost(DialogHost);
             this.DataContext = new HomeContext(presenterFactory, dialogService);
-
         }
     }
 }

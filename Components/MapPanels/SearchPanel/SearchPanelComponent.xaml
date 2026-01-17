@@ -1,0 +1,114 @@
+﻿<UserControl x:Class="TravelPlanning.Components.MapPanels.SearchPanel.SearchPanelComponent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TravelPlanning.Components.MapPanels.SearchPanel"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:conv="clr-namespace:TravelPlanning.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="465">
+    <UserControl.Resources>
+        <conv:StarConverter x:Key="StarConverter" />
+    </UserControl.Resources>
+
+
+    <Grid Background="#FAFAFA">
+        <Border Grid.Column="0"
+         Background="White"
+         CornerRadius="12"
+         Margin="5"
+         Padding="0"
+         Panel.ZIndex="10">
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+
+                    <!-- 🖼 封面圖片 -->
+                    <Image Height="180"
+                    Stretch="UniformToFill"
+                    Source="{Binding Photo}" />
+
+                    <!-- 📦 內容區 -->
+                    <StackPanel Margin="20">
+
+                        <!-- 📍 地點名稱 -->
+                        <TextBlock Text="{Binding PlaceName}"
+                         FontSize="26"
+                         FontWeight="SemiBold"
+                         Foreground="#202124"
+                         TextWrapping="Wrap"
+                         Margin="0,0,0,6"/>
+
+                        <!-- ⭐ 評分列 -->
+                        <StackPanel Orientation="Horizontal"
+                             VerticalAlignment="Center"
+                             Margin="0,0,0,10">
+
+                            <TextBlock Text="{Binding Rate}"
+                             FontSize="14"
+                             FontWeight="SemiBold"
+                             Foreground="#202124"
+                             Margin="0,0,6,0"/>
+
+                            <ItemsControl ItemsSource="{Binding Stars}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontSize="16"
+                                                 Margin="1"
+                                                 Foreground="#F9AB00"
+                                                 Text="{Binding Converter={StaticResource StarConverter}}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <TextBlock Text="•"
+                             Margin="8,0"
+                             Foreground="#5F6368"/>
+
+                            <TextBlock Text="{Binding Type}"
+                             FontSize="13"
+                             Foreground="#5F6368"/>
+                        </StackPanel>
+
+                        <!-- 分隔線 -->
+                        <Border Height="1"
+                                 Background="#E0E0E0"
+                                 Margin="0,8"/>
+
+                        <!-- 📍 地址 -->
+                        <TextBlock Text="{Binding Addresses}"
+                             FontSize="14"
+                             Foreground="#202124"
+                             TextWrapping="Wrap"
+                             Margin="0,8"/>
+
+                        <!-- ⏰ 營業時間 -->
+                        <ItemsControl ItemsSource="{Binding OpeningTime}" Margin="0,4">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}"
+                                         FontSize="13"
+                                         Foreground="#5F6368"
+                                         Margin="0,2"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <!-- ☎ 電話 -->
+                        <TextBlock Text="{Binding Phone}"
+                         FontSize="13"
+                         Foreground="#1A73E8"
+                         Margin="0,10,0,0"/>
+
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

@@ -33,4 +33,34 @@ namespace TravelPlanning.Utilties
             _execute?.Invoke(parameter);
         }
     }
+
+    public class RelayCommand<T> : ICommand
+    {
+        private readonly Action<T> _execute;
+
+        public event EventHandler CanExecuteChanged;
+
+        public RelayCommand(Action<T> execute)
+        {
+            _execute = execute;
+        }
+
+        public RelayCommand(Action execute)
+        {
+            _execute = _ => execute();
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object parameter)
+        {
+            _execute?.Invoke((T)parameter);
+        }
+    }
 }
+
+
+

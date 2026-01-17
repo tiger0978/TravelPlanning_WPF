@@ -7,8 +7,11 @@
     <Application.Resources>
         <ResourceDictionary>
         <ResourceDictionary.MergedDictionaries>
-            <ui:ThemesDictionary Theme="Dark" />
-            <ui:ControlsDictionary />
+                <ui:ThemesDictionary Theme="Dark" />
+                <ui:ControlsDictionary/>
+                <ResourceDictionary Source="pack://application:,,,/GoogleMap.SDK.UI.WPF;component/Themes/Generic.xaml"/>
+                <!--<ResourceDictionary Source="pack://application:,,,/GoogleMap.SDK.UI.WPF;component/MapInfoToolTipStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/GoogleMap.SDK.UI.WPF;component/CustomToolTipStyle.xaml"/>-->
         </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

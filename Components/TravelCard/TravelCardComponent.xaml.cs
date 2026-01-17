@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TravelPlanning.Components.TravelCardComponent
+namespace TravelPlanning.Components.TravelCard
 {
     /// <summary>
     /// TravelCard.xaml 的互動邏輯
     /// </summary>
-    public partial class TravelCard : UserControl
+    public partial class TravelCardComponent : UserControl
     {
-        public TravelCard()
+        public TravelCardComponent()
         {
             InitializeComponent();
         }

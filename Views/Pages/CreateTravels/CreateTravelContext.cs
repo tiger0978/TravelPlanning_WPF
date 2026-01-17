@@ -11,11 +11,13 @@ using System.Windows.Media.Imaging;
 using TravelPlanning.Contracts.DTOs;
 using TravelPlanning.Contracts;
 using TravelPlanning.Utilties;
+using IoC_Container.Attributes;
 
-namespace TravelPlanning.Views.CreateTravels
+namespace TravelPlanning.Views.Pages.CreateTravels
 {
+    [Transient]
     [AddINotifyPropertyChangedInterface]
-    public class CreateTravelContext : ICreateTravelView
+    public class CreateTravelContext : ICreateTravelPage
     {
         public string Title { get; set; } = "宜蘭三天兩夜";
         public int Days { get; set; } = 3;
@@ -27,7 +29,7 @@ namespace TravelPlanning.Views.CreateTravels
 
         public CreateTravelContext(IPresenterFactory presenterFactory) 
         {
-            var presenter = presenterFactory.CreatePresneter<ICreateTravelPresenter, ICreateTravelView>(this);
+            var presenter = presenterFactory.CreatePresneter<ICreateTravelPresenter, ICreateTravelPage>(this);
             CreateTravelCommand = new RelayCommand(() =>
             {
                 var travelPlanDto = new TravelPlanDTO(Title, Description, Days, StartedDate, Cover);

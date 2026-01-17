@@ -1,5 +1,6 @@
 ﻿using GoogleMap.SDK.Core.Utility;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -20,10 +21,25 @@ namespace TravelPlanning.Respositories
             _db = db;
         }
 
-        public async Task<MapLayerDAO> GetMapLayerByIdAsync(Guid mapLayerId)
+        public async Task<MapLayerDAO> AddMapLayerAsync(MapLayerDAO mapLayerDAO)
+        {
+            var entity = Mapper.Map<MapLayerDAO, MapLayer>(mapLayerDAO);
+            _db.MapLayers.Add(entity);
+            var res = await _db.SaveChangesAsync();
+            return res > 0 ? Mapper.Map<MapLayer, MapLayerDAO>(entity) : null;
+        }
+
+        public async Task<bool> DeleteMapLayerByIdAsync(Guid id)
+        {
+            var entity = await _db.MapLayers.FirstOrDefaultAsync(x => x.Id == id);
+            var res = _db.MapLayers.Remove(entity);
+            return res != null;
+        }
+
+        public async Task<MapLayerDAO> GetMapLayerByIdAsync(Guid id)
         {
 
-            var data = await _db.MapLayers.FirstOrDefaultAsync(x => x.Id == mapLayerId);
+            var data = await _db.MapLayers.FirstOrDefaultAsync(x => x.Id == id);
             var config = new AutoMapper.MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<MapPlace, MapPlaceDAO>();
@@ -45,10 +61,5 @@ namespace TravelPlanning.Respositories
             return result;
         }
 
-        public async Task<List<MapPlaceDAO>> GetMapPlacesAsync(Guid mapLayerId)
-        {
-            var places = await _db.MapPlaces.Where(x => x.MapLayerId == mapLayerId).ToListAsync();
-            return Mapper.Map<MapPlace, MapPlaceDAO>(places).ToList();
-        }
     }
 }

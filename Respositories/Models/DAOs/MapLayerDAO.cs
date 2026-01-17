@@ -13,5 +13,10 @@ namespace TravelPlanning.Respositories.Models.DAOs
         public string Name { get; set; }
         public List<MapPlaceDAO> MapPlaces { get; set; }
 
+        public MapLayerDAO() { }
+        public MapLayerDAO(string name)
+        {
+            Name = name;
+        }
     }
 }

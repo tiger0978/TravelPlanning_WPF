@@ -1,31 +1,27 @@
-﻿using GoogleMap.SDK.Core.Utility;
-using IoC_Container;
+﻿using IoC_Container;
+using IoC_Container.Attributes;
 using PropertyChanged;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using TravelPlanning.Components.TravelCardComponent;
+using TravelPlanning.Components.TravelCard;
 using TravelPlanning.Contracts;
 using TravelPlanning.Contracts.DTOs;
 using TravelPlanning.EventHandlers;
-using TravelPlanning.Respositories.Models.DAOs;
 using TravelPlanning.Utilties;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace TravelPlanning.Views.Pages.Home
 {
+    [Transient]
     [AddINotifyPropertyChangedInterface]
-    public class HomeContext : IHomeView
+    public class HomeContext : IHomePage
     {
-        public ObservableCollection<TravelCardViewModel> TravelCards { get; set; } = new ObservableCollection<TravelCardViewModel>() { };
+        public ObservableCollection<TravelCardContext> TravelCards { get; set; } = new ObservableCollection<TravelCardContext>() { };
 
         public ICommand DeleteCommand { get; set; }
         private IContentDialogService _dialogService;
@@ -34,7 +30,7 @@ namespace TravelPlanning.Views.Pages.Home
 
         public HomeContext(IPresenterFactory presenterFactory, IContentDialogService dialogService) 
         {
-            var presenter = presenterFactory.CreatePresneter<IHomePresenter, IHomeView>(this);
+            var presenter = presenterFactory.CreatePresneter<IHomePresenter, IHomePage>(this);
             _presenter = presenter;
             presenter.GetTravelCards();
             TravelCardHandler.ReceivedTravelCard += TravelCardHandler_ReceivedTravelCard;
@@ -48,7 +44,7 @@ namespace TravelPlanning.Views.Pages.Home
 
         public void RenderPage(List<TravelPlanDTO> plans)
         {
-            var cards = plans.Select(x => new TravelCardViewModel(x.Id, x.Title, x.StartDate, x.Cover)).ToList();
+            var cards = plans.Select(x => new TravelCardContext(x.Id, x.Title, x.StartDate, x.Cover)).ToList();
             TravelCards.Clear();
             foreach (var card in cards)
             {
@@ -57,7 +53,7 @@ namespace TravelPlanning.Views.Pages.Home
         }
         private async Task DeleteCard(object obj) 
         {
-            if (obj is TravelCardViewModel card)
+            if (obj is TravelCardContext card)
             {
                 var dialog = await _dialogService.ShowAsync(
                             new ContentDialog
@@ -79,7 +75,7 @@ namespace TravelPlanning.Views.Pages.Home
 
         private void TravelCardHandler_ReceivedTravelCard(object sender, TravelPlanDTO e)
         {
-            var card = new TravelCardViewModel(e.Id, e.Title, e.StartDate, e.Cover);
+            var card = new TravelCardContext(e.Id, e.Title, e.StartDate, e.Cover);
             TravelCards.Add(card);
         }
 

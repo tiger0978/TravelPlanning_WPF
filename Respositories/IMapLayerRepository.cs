@@ -10,7 +10,8 @@ namespace TravelPlanning.Respositories
     public interface IMapLayerRepository
     {
         Task<List<MapLayerDAO>> GetMapLayersAsync();
-        Task<MapLayerDAO> GetMapLayerByIdAsync(Guid mapLayerId);
-        Task<List<MapPlaceDAO>> GetMapPlacesAsync(Guid mapLayerId);
+        Task<MapLayerDAO> GetMapLayerByIdAsync(Guid id);
+        Task<MapLayerDAO> AddMapLayerAsync(MapLayerDAO mapLayerDAO);
+        Task<bool> DeleteMapLayerByIdAsync(Guid id);
     }
 }

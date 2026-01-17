@@ -1,21 +1,6 @@
-﻿using GoogleMap.SDK.Contract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using TravelPlanning.Attributes;
+﻿using System;
+using TravelPlanning.Utilties;
 using TravelPlanning.Views.MainTravel;
-using TravelPlanning.Views.Pages.FavoriteTravel;
 using TravelPlanning.Views.Pages.Home;
 using Wpf.Ui;
 using Wpf.Ui.Abstractions;
@@ -26,24 +11,16 @@ namespace TravelPlanning.Views
     /// <summary>
     /// MainTravelWindow.xaml 的互動邏輯
     /// </summary>
-    public partial class MainTravelWindow//: INavigationWindow
+    public partial class MainTravelWindow
     {
-        MainViewModel viewModel { get; set; } = new MainViewModel();
-        public MainTravelWindow(IEnumerable<Page> pages, INavigationService navigationService)
+        MainWindowContext ViewModel { get; set; } = new MainWindowContext();
+        public MainTravelWindow(INavigationService navigationService)
         {
             InitializeComponent();
-            DataContext = viewModel;
-            
-            var navigationItems = pages.Select(x=> 
-            {
-                var itemAttribute = x.GetType().GetCustomAttribute<NavigationItemAttribute>();
-                if(itemAttribute == null) return null;
-               // new NavigationViewItem(itemAttribute.Name, itemAttribute.IconKey,);
-                var navigationItem = new NavigationViewItem(itemAttribute.Name,itemAttribute.IconKey, x.GetType());
-                return navigationItem;
-            }).Where(x=>x != null).ToList();
-            viewModel.InitialNavigationItems(navigationItems);
-            Loaded += (s, e) => navigationView.Navigate(typeof(FavoriteTravel));
+            DataContext = ViewModel;
+            var pages = NavigationPageProvider.GetPages<NavigationViewItem>("TravelPlanning.Views.Pages");
+            ViewModel.InitialNavigationItems(pages);
+            Loaded += (s, e) => navigationView.Navigate(typeof(HomePage));
             navigationService.SetNavigationControl(navigationView);
         }
 
@@ -55,7 +32,6 @@ namespace TravelPlanning.Views
         public void SetPageService(INavigationViewPageProvider navigationViewPageProvider)
         {
             navigationView.SetPageProviderService(navigationViewPageProvider);
-
         }
 
         public void ShowWindow() => Show();

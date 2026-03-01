@@ -48,5 +48,19 @@ namespace TravelPlanning.Utilties
             }
             this.ContentControl.Content = userControl;
         }
+        public static List<T> GetPages<T>(string typeNamspace)
+        {
+            List<T> pages = Assembly.GetExecutingAssembly().DefinedTypes
+               .Where(x => x.FullName.Contains(typeNamspace))
+               .Select(x =>
+               {
+                   var itemAttribute = x.GetCustomAttribute<NavigationItemAttribute>();
+                   if (itemAttribute == null) return default(T);
+                   var page = (T)Activator.CreateInstance(typeof(T), itemAttribute.Name, itemAttribute.IconKey, x.AsType());
+                   return page;
+               }).Where(x => x != null).ToList();
+            return pages;
+        }
+
     }
 }

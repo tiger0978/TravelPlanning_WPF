@@ -31,7 +31,7 @@ namespace TravelPlanning.Components.MapPanels
         public MapPanelContext(IGoogleAPIContext apiContext, IComponentFactory componentFactory, 
             NavigationProvider navigationProvider)
         {
-            PageItems = NavigationPageProvider.GetPages<NavigationPageItem>("TravelPlanning.Components.MapPanels");
+            PageItems = NavigationProvider.GetPages<NavigationPageItem>("TravelPlanning.Components.MapPanels");
             ChangePageCommand = new RelayCommand<Type>(pageType =>
             {
                 navigationProvider.Navigate(pageType, null);

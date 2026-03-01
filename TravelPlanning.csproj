@@ -270,7 +270,6 @@
     <Compile Include="Respositories\MapPlaceRepository.cs" />
     <Compile Include="Respositories\TravelRepository.cs" />
     <Compile Include="Utilties\Navigation\INavigationAware.cs" />
-    <Compile Include="Utilties\Navigation\NavigationPageProvider.cs" />
     <Compile Include="Utilties\Navigation\NavigationProvider.cs" />
     <Compile Include="Utilties\RelayCommand.cs" />
     <Compile Include="Views\MainView\MainWindowContext.cs" />

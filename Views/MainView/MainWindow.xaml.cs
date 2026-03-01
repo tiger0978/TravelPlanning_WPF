@@ -18,7 +18,7 @@ namespace TravelPlanning.Views
         {
             InitializeComponent();
             DataContext = ViewModel;
-            var pages = NavigationPageProvider.GetPages<NavigationViewItem>("TravelPlanning.Views.Pages");
+            var pages = NavigationProvider.GetPages<NavigationViewItem>("TravelPlanning.Views.Pages");
             ViewModel.InitialNavigationItems(pages);
             Loaded += (s, e) => navigationView.Navigate(typeof(HomePage));
             navigationService.SetNavigationControl(navigationView);

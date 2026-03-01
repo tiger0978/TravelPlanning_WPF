@@ -1,15 +1,11 @@
-﻿using GoogleMap.SDK.Core.Utility;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TravelPlanning.Contracts;
 using TravelPlanning.Contracts.DTOs;
 using TravelPlanning.Respositories;
-using TravelPlanning.Respositories.Models.DAOs;
 
-namespace TravelPlanning.Presenters
+namespace TravelPlanning.Presenters.Pages
 {
     public class HomePresenter : IHomePresenter
     {

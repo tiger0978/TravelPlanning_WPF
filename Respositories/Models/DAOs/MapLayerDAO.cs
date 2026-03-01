@@ -11,6 +11,7 @@ namespace TravelPlanning.Respositories.Models.DAOs
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string IconKey { get; set; }
         public List<MapPlaceDAO> MapPlaces { get; set; }
 
         public MapLayerDAO() { }

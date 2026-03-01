@@ -1,19 +1,15 @@
-﻿using GoogleMap.SDK.Contract;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using GoogleMap.SDK.Contract;
 using GoogleMap.SDK.Contract.Components.Gmap.Models;
-using GoogleMap.SDK.Contracts.GoogleAPI;
 using GoogleMap.SDK.Contracts.GoogleAPI.Models.PlaceDetail.Response;
 using GoogleMap.SDK.UI.WPF;
 using IoC_Container;
-using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using TravelPlanning.Attributes;
 using TravelPlanning.Components.MapPanels;
 using TravelPlanning.Components.MapPanels.SearchPanel;
-using TravelPlanning.Utilties;
+using TravelPlanning.Messages;
 
 namespace TravelPlanning.Views.Pages.FavoriteTravel
 {
@@ -24,25 +20,19 @@ namespace TravelPlanning.Views.Pages.FavoriteTravel
     public partial class FavoriteTravelPage : Page
     {
         private IGMap _gmap;
-        private IGoogleAPIContext _googleAPIContext;
         public FavoriteTravelContext favoriteTravelContext { get; set; }
-        //private SearchPanelComponent _searchPanel { get; set; }
         private MapPanelComponent _mapPanel { get; set; }
 
 
-        public FavoriteTravelPage(IComponentFactory componentFactory,IPresenterFactory presenterFactory, IGMap gmap, IGoogleAPIContext context)
+        public FavoriteTravelPage(IComponentFactory componentFactory,IPresenterFactory presenterFactory, IGMap gmap)
         {
             InitializeComponent();
             favoriteTravelContext = new FavoriteTravelContext(presenterFactory);
             DataContext = favoriteTravelContext;
-
-            _googleAPIContext = context;
-
-            _mapPanel = new MapPanelComponent(componentFactory, context);
+            _mapPanel = componentFactory.Create<MapPanelComponent>();
             PlaceContainer.Children.Add(_mapPanel);
             Grid.SetRow(_mapPanel, 0);
             Grid.SetColumn(_mapPanel, 0);
-
             _gmap = gmap;
             _gmap.OnMarkerClicked += _gmap_OnMarkerClicked;
 
@@ -51,13 +41,11 @@ namespace TravelPlanning.Views.Pages.FavoriteTravel
 
             _mapPanel.OnSelectedPlace += SearchPanel_OnReceivedPlace;
 
-
-            //_searchPanel.OnReceivedPlace += SearchPanel_OnReceivedPlace;
-            //_searchPanel.Context.ReceivedPlaceCommand = new RelayCommand<PlaceDetailResponse>(response =>
-            //{
-            //    SearchPanel_OnReceivedPlace(response);
-            //    favoriteTravelContext.SelectedPlaceDetail = response;
-            //});
+            WeakReferenceMessenger.Default.Register<PlaceSelectedMessage>(this, (r, m) =>
+            {
+                // m.Value 就是傳過來的 PlaceDetailResponse
+                SearchPanel_OnReceivedPlace(m.Value);
+            });
         }
 
         private async void _gmap_OnMarkerClicked(object sender, MarkerInfo e)
@@ -74,7 +62,6 @@ namespace TravelPlanning.Views.Pages.FavoriteTravel
                 Title = response.result.name,
                 Address = response.result.formatted_address,
             };
-
             var tooltipStyle = (Style)FindResource("MapInfoToolTipStyle");
             var toolTip = new ToolTip
             {

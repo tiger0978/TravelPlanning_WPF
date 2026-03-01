@@ -1,18 +1,14 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using TravelPlanning.Attributes;
-using TravelPlanning.Models;
-using Wpf.Ui.Controls;
 
 namespace TravelPlanning.Utilties
 {
     public static class NavigationPageProvider 
     {
+
         public static List<T> GetPages<T>(string typeNamspace)
         {
             List<T> pages = Assembly.GetExecutingAssembly().DefinedTypes
@@ -26,5 +22,7 @@ namespace TravelPlanning.Utilties
                }).Where(x => x != null).ToList();
             return pages;
         }
+
+
     }
 }

@@ -41,6 +41,15 @@ namespace TravelPlanning.Respositories
             return res != null;
         }
 
+        public async Task<MapPlaceDAO> GetMapPlaceByPlaceIdAsync(Guid mapLayerId, string placeId) 
+        {
+            var entity = await _db.MapPlaces.FirstOrDefaultAsync(
+                x => x.MapLayerId == mapLayerId
+                && x.PlaceId == placeId);
+            var result = Mapper.Map<MapPlace, MapPlaceDAO>(entity);
+            return result;
+        }
+
         public async Task<List<MapPlaceDAO>> GetMapPlacesAsync()
         {
             var entities = await _db.MapPlaces.ToListAsync();

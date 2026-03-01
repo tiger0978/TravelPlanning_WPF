@@ -21,6 +21,11 @@ namespace TravelPlanning.Models.Entities
         [StringLength(100)]
         public string Name { get; set; }
 
+        [Required]
+        [StringLength(100)]
+        public string IconKey { get; set; }
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MapPlace> MapPlaces { get; set; }
     }

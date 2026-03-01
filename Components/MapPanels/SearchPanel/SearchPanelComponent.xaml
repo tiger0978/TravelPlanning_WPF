@@ -1,114 +1,211 @@
-﻿<UserControl x:Class="TravelPlanning.Components.MapPanels.SearchPanel.SearchPanelComponent"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TravelPlanning.Components.MapPanels.SearchPanel"
-             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-             xmlns:conv="clr-namespace:TravelPlanning.Converters"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="465">
+﻿<UserControl
+    x:Class="TravelPlanning.Components.MapPanels.SearchPanel.SearchPanelComponent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:TravelPlanning.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:TravelPlanning.Components.MapPanels.SearchPanel"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:routes="clr-namespace:TravelPlanning.Components.MapPanels.PlanRoutePanel"
+    xmlns:saveList="clr-namespace:TravelPlanning.Components.SaveList"
+    xmlns:savedPlace="clr-namespace:TravelPlanning.Components.MapPanels.SavePlacePanel"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    d:DesignHeight="450"
+    d:DesignWidth="465"
+    mc:Ignorable="d">
     <UserControl.Resources>
         <conv:StarConverter x:Key="StarConverter" />
+        <Style x:Key="MapActionButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="60" />
+            <Setter Property="Height" Value="60" />
+            <Setter Property="Background" Value="#F2F7F9" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="Root"
+                            Padding="6"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="100">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="#E6F2F7" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="#D6EBF5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </UserControl.Resources>
 
 
     <Grid Background="#FAFAFA">
-        <Border Grid.Column="0"
-         Background="White"
-         CornerRadius="12"
-         Margin="5"
-         Padding="0"
-         Panel.ZIndex="10">
-
+        <Border
+            Margin="5"
+            Background="White"
+            CornerRadius="12">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-
-                    <!-- 🖼 封面圖片 -->
-                    <Image Height="180"
-                    Stretch="UniformToFill"
-                    Source="{Binding Photo}" />
-
-                    <!-- 📦 內容區 -->
+                    <Image
+                        Height="200"
+                        Source="{Binding Photo}"
+                        Stretch="UniformToFill" />
                     <StackPanel Margin="20">
+                        <TextBlock
+                            FontSize="26"
+                            FontWeight="SemiBold"
+                            Text="{Binding PlaceName}" />
 
-                        <!-- 📍 地點名稱 -->
-                        <TextBlock Text="{Binding PlaceName}"
-                         FontSize="26"
-                         FontWeight="SemiBold"
-                         Foreground="#202124"
-                         TextWrapping="Wrap"
-                         Margin="0,0,0,6"/>
-
-                        <!-- ⭐ 評分列 -->
-                        <StackPanel Orientation="Horizontal"
-                             VerticalAlignment="Center"
-                             Margin="0,0,0,10">
-
-                            <TextBlock Text="{Binding Rate}"
-                             FontSize="14"
-                             FontWeight="SemiBold"
-                             Foreground="#202124"
-                             Margin="0,0,6,0"/>
-
+                        <StackPanel
+                            Margin="0,0,0,10"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                            <TextBlock
+                                Margin="0,0,6,0"
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Foreground="#202124"
+                                Text="{Binding Rate}" />
                             <ItemsControl ItemsSource="{Binding Stars}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal"/>
+                                        <StackPanel Orientation="Horizontal" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock FontSize="16"
-                                                 Margin="1"
-                                                 Foreground="#F9AB00"
-                                                 Text="{Binding Converter={StaticResource StarConverter}}" />
+                                        <TextBlock
+                                            Margin="1"
+                                            FontSize="16"
+                                            Foreground="#F9AB00"
+                                            Text="{Binding Converter={StaticResource StarConverter}}" />
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-
-                            <TextBlock Text="•"
-                             Margin="8,0"
-                             Foreground="#5F6368"/>
-
-                            <TextBlock Text="{Binding Type}"
-                             FontSize="13"
-                             Foreground="#5F6368"/>
+                            <TextBlock
+                                Margin="8,0"
+                                Foreground="#5F6368"
+                                Text="•" />
+                            <TextBlock
+                                FontSize="13"
+                                Foreground="#5F6368"
+                                Text="{Binding Type}" />
                         </StackPanel>
 
-                        <!-- 分隔線 -->
-                        <Border Height="1"
-                                 Background="#E0E0E0"
-                                 Margin="0,8"/>
+                        <StackPanel Margin="0,10,20,0" Orientation="Horizontal">
+                            <Button
+                                Margin="0,0,16,0"
+                                Command="{Binding RoutePlanCommand}"
+                                CommandParameter="{x:Type routes:PlanRouteComponent}"
+                                Style="{StaticResource MapActionButtonStyle}">
+                                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                                    <ui:SymbolIcon FontSize="22" Symbol="Directions24" />
+                                    <TextBlock
+                                        Margin="0,4,0,0"
+                                        HorizontalAlignment="Center"
+                                        FontSize="10"
+                                        Foreground="#333"
+                                        Text="規劃路線" />
+                                </StackPanel>
+                            </Button>
 
-                        <!-- 📍 地址 -->
-                        <TextBlock Text="{Binding Addresses}"
-                             FontSize="14"
-                             Foreground="#202124"
-                             TextWrapping="Wrap"
-                             Margin="0,8"/>
+                            <Button
+                                Name="SavedButton"
+                                Margin="0,0,16,0"
+                                Command="{Binding ChangePageCommand}"
+                                CommandParameter="{x:Type savedPlace:SavePlacePanelComponent}"
+                                Style="{StaticResource MapActionButtonStyle}">
+                                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                                    <ui:SymbolIcon FontSize="22" Symbol="Bookmark24" />
+                                    <TextBlock
+                                        Margin="0,4,0,0"
+                                        HorizontalAlignment="Center"
+                                        FontSize="12"
+                                        Foreground="#333"
+                                        Text="已儲存" />
+                                </StackPanel>
+                            </Button>
+                            <!--  Popup  -->
+                            <Popup
+                                x:Name="SavedPopup"
+                                AllowsTransparency="True"
+                                IsOpen="{Binding ShowPopup}"
+                                Placement="Right"
+                                PlacementTarget="{Binding ElementName=SavedButton}"
+                                StaysOpen="False">
+                                <Border
+                                    Padding="16"
+                                    Background="White"
+                                    CornerRadius="8">
+                                    <!--  你的 component  -->
+                                    <saveList:SaveListComponent SelectedItem="{Binding DataContext.SelectedItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                                </Border>
+                            </Popup>
+                            <Button Style="{StaticResource MapActionButtonStyle}">
+                                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                                    <ui:SymbolIcon FontSize="22" Symbol="Share24" />
+                                    <TextBlock
+                                        Margin="0,4,0,0"
+                                        HorizontalAlignment="Center"
+                                        FontSize="12"
+                                        Foreground="#333"
+                                        Text="分享" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Margin="0,10" Orientation="Horizontal" />
 
-                        <!-- ⏰ 營業時間 -->
-                        <ItemsControl ItemsSource="{Binding OpeningTime}" Margin="0,4">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding}"
-                                         FontSize="13"
-                                         Foreground="#5F6368"
-                                         Margin="0,2"/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                        <Border
+                            Height="1"
+                            Margin="0,8"
+                            Background="#E0E0E0" />
 
-                        <!-- ☎ 電話 -->
-                        <TextBlock Text="{Binding Phone}"
-                         FontSize="13"
-                         Foreground="#1A73E8"
-                         Margin="0,10,0,0"/>
-
+                        <TextBlock
+                            Margin="0,8"
+                            Text="{Binding Addresses}"
+                            TextWrapping="Wrap" />
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
+        </Border>
+
+        <Border
+            Height="48"
+            Margin="20,25,20,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            Background="White"
+            BorderBrush="#DEE2E6"
+            BorderThickness="1"
+            CornerRadius="24">
+            <Border.Effect>
+                <DropShadowEffect
+                    BlurRadius="10"
+                    Opacity="0.2"
+                    ShadowDepth="2" />
+            </Border.Effect>
+            <Grid Margin="15,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid x:Name="PlaceContainer" Grid.Column="0" />
+                <ui:SymbolIcon
+                    Grid.Column="1"
+                    Cursor="Hand"
+                    Foreground="#70757A"
+                    Symbol="Search24" />
+            </Grid>
         </Border>
     </Grid>
 </UserControl>

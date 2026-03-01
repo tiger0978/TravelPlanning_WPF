@@ -14,5 +14,6 @@ namespace TravelPlanning.Respositories
         Task<List<MapPlaceDAO>> GetMapPlacesByMapperIdAsync(Guid mapperId);
         Task<bool> DeleteMapPlaceByIdAsync(Guid id);
         Task<bool> DeleteMapPlacesByMapperLayerId(Guid id);
+        Task<MapPlaceDAO> GetMapPlaceByPlaceIdAsync(Guid mapLayerId,string placeId);
     }
 }

@@ -9,7 +9,7 @@ namespace TravelPlanning.Respositories.Models.DAOs
 {
     public class MapPlaceDAO
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public Guid MapLayerId { get; set; }
         public string PlaceId { get; set; }
         public string Name { get; set; }

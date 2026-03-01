@@ -42,6 +42,9 @@
     <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>packages\AutoMapper.10.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="CommunityToolkit.Mvvm, Version=8.4.0.0, Culture=neutral, PublicKeyToken=4aff67a105548ee2, processorArchitecture=MSIL">
+      <HintPath>packages\CommunityToolkit.Mvvm.8.4.0\lib\netstandard2.0\CommunityToolkit.Mvvm.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -55,16 +58,16 @@
       <HintPath>packages\GMap.NET.WinPresentation.2.1.7\lib\net472\GMap.NET.WindowsPresentation.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMap.SDK.Contract, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\GoogleMap.SDK.WPF.1.0.3.7\lib\net472\GoogleMap.SDK.Contract.dll</HintPath>
+      <HintPath>packages\GoogleMap.SDK.WPF.1.0.4.6\lib\net472\GoogleMap.SDK.Contract.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMap.SDK.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\GoogleMap.SDK.WPF.1.0.3.7\lib\net472\GoogleMap.SDK.Core.dll</HintPath>
+      <HintPath>packages\GoogleMap.SDK.WPF.1.0.4.6\lib\net472\GoogleMap.SDK.Core.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMap.SDK.UI.WPF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\GoogleMap.SDK.WPF.1.0.3.7\lib\net472\GoogleMap.SDK.UI.WPF.dll</HintPath>
+      <HintPath>packages\GoogleMap.SDK.WPF.1.0.4.6\lib\net472\GoogleMap.SDK.UI.WPF.dll</HintPath>
     </Reference>
     <Reference Include="IoC_Container, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\GoogleMap.SDK.WPF.1.0.3.7\lib\net472\IoC_Container.dll</HintPath>
+      <HintPath>packages\GoogleMap.SDK.WPF.1.0.4.6\lib\net472\IoC_Container.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.6, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.9.0.6\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -114,6 +117,9 @@
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -191,9 +197,20 @@
       <DependentUpon>GoogleMapComponent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\GMap\GoolgeMapContext.cs" />
+    <Compile Include="Components\MapPanels\AddSavePlaceList\AddSaveListComponent.xaml.cs">
+      <DependentUpon>AddSaveListComponent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MapPanels\AddSavePlaceList\AddSaveListContext.cs" />
+    <Compile Include="Components\MapPanels\AddSavePlaceList\SaveListPlaceViewModel.cs" />
     <Compile Include="Components\MapPanels\MapPanelComponent.xaml.cs">
       <DependentUpon>MapPanelComponent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\MapPanels\PlanRoutePanel\Models\RouteViewModel.cs" />
+    <Compile Include="Components\MapPanels\PlanRoutePanel\Models\TrafficViewModel.cs" />
+    <Compile Include="Components\MapPanels\PlanRoutePanel\PlanRouteComponent.xaml.cs">
+      <DependentUpon>PlanRouteComponent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MapPanels\PlanRoutePanel\PlanRoutePanelContext.cs" />
     <Compile Include="Components\MapPanels\SavePlacePanel\SavePlacePanelComponent.xaml.cs">
       <DependentUpon>SavePlacePanelComponent.xaml</DependentUpon>
     </Compile>
@@ -203,23 +220,36 @@
     </Compile>
     <Compile Include="Components\MapPanels\SearchPanel\SearchPanelContext.cs" />
     <Compile Include="Components\MapPanels\MapPanelContext.cs" />
+    <Compile Include="Components\SaveList\Models\SaveListViewModel.cs" />
+    <Compile Include="Components\SaveList\SaveListComponent.xaml.cs">
+      <DependentUpon>SaveListComponent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\SaveList\SaveListContext.cs" />
     <Compile Include="Components\TravelCard\TravelCardComponent.xaml.cs">
       <DependentUpon>TravelCardComponent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\TravelCard\TravelCardContext.cs" />
     <Compile Include="Contracts\CreateTravelContract.cs" />
     <Compile Include="Contracts\DTOs\FavoriteTravelDTO.cs" />
+    <Compile Include="Contracts\DTOs\SavePlaceDto.cs" />
     <Compile Include="Contracts\DTOs\TravelPlanDTO.cs" />
     <Compile Include="Contracts\FavoriteTravelContract.cs" />
     <Compile Include="Contracts\HomeContract.cs" />
+    <Compile Include="Contracts\SaveListContract.cs" />
+    <Compile Include="Contracts\SavePlaceContract.cs" />
+    <Compile Include="Contracts\SearchPanelContract.cs" />
     <Compile Include="Converters\StarConverter.cs" />
     <Compile Include="EventHandlers\TravelCardHandler.cs" />
     <Compile Include="Extensions\BitmapImageExtension.cs" />
     <Compile Include="Extensions\NavigationExtension.cs" />
+    <Compile Include="Messages\PlaceSelectedMessage.cs" />
     <Compile Include="Models\Enums\StartType.cs" />
     <Compile Include="Models\GridLengthAnimation.cs" />
     <Compile Include="Models\NavigationPageItem.cs" />
-    <Compile Include="Presenters\FavoriteTravelPresenter.cs" />
+    <Compile Include="Presenters\Components\SaveListPresenter.cs" />
+    <Compile Include="Presenters\Components\SavePlacePresenter.cs" />
+    <Compile Include="Presenters\Components\SearchPanelPresenter.cs" />
+    <Compile Include="Presenters\Pages\FavoriteTravelPresenter.cs" />
     <Compile Include="Respositories\IMapPlaceRepository.cs" />
     <Compile Include="Respositories\Models\DAOs\MapLayerDAO.cs" />
     <Compile Include="Respositories\Models\DAOs\MapPlaceDAO.cs" />
@@ -232,14 +262,16 @@
     <Compile Include="Respositories\Models\Entities\TravelDay.cs" />
     <Compile Include="Respositories\Models\Entities\TravelPlace.cs" />
     <Compile Include="Respositories\Models\Entities\TravelPlan.cs" />
-    <Compile Include="Presenters\CreateTravelPresenter.cs" />
-    <Compile Include="Presenters\HomePresenter.cs" />
+    <Compile Include="Presenters\Pages\CreateTravelPresenter.cs" />
+    <Compile Include="Presenters\Pages\HomePresenter.cs" />
     <Compile Include="Respositories\IMapLayerRepository.cs" />
     <Compile Include="Respositories\ITravelRepository.cs" />
     <Compile Include="Respositories\MapLayerRepository.cs" />
     <Compile Include="Respositories\MapPlaceRepository.cs" />
     <Compile Include="Respositories\TravelRepository.cs" />
-    <Compile Include="Utilties\NavigationPageProvider.cs" />
+    <Compile Include="Utilties\Navigation\INavigationAware.cs" />
+    <Compile Include="Utilties\Navigation\NavigationPageProvider.cs" />
+    <Compile Include="Utilties\Navigation\NavigationProvider.cs" />
     <Compile Include="Utilties\RelayCommand.cs" />
     <Compile Include="Views\MainView\MainWindowContext.cs" />
     <Compile Include="Views\Pages\CreateTravels\CreateTravelContext.cs" />
@@ -271,7 +303,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Components\MapPanels\AddSavePlaceList\AddSaveListComponent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\MapPanels\MapPanelComponent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\MapPanels\PlanRoutePanel\PlanRouteComponent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -280,6 +320,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Components\MapPanels\SearchPanel\SearchPanelComponent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\SaveList\SaveListComponent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -356,8 +400,10 @@
     <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
     <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
     <Error Condition="!Exists('packages\Fody.6.8.2\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Fody.6.8.2\build\Fody.targets'))" />
+    <Error Condition="!Exists('packages\CommunityToolkit.Mvvm.8.4.0\build\CommunityToolkit.Mvvm.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\CommunityToolkit.Mvvm.8.4.0\build\CommunityToolkit.Mvvm.targets'))" />
   </Target>
   <Import Project="packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.5\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.5\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <Import Project="packages\Fody.6.8.2\build\Fody.targets" Condition="Exists('packages\Fody.6.8.2\build\Fody.targets')" />
+  <Import Project="packages\CommunityToolkit.Mvvm.8.4.0\build\CommunityToolkit.Mvvm.targets" Condition="Exists('packages\CommunityToolkit.Mvvm.8.4.0\build\CommunityToolkit.Mvvm.targets')" />
 </Project>

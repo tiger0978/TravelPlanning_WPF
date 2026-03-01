@@ -51,14 +51,29 @@ namespace TravelPlanning.Respositories
 
         public async Task<List<MapLayerDAO>> GetMapLayersAsync()
         {
-            var datas = await _db.MapLayers.ToListAsync();
-            var config = new AutoMapper.MapperConfiguration(cfg =>
+            var datas = await _db.MapLayers.Select(x => new MapLayerDAO()
             {
-                cfg.CreateMap<MapPlace, MapPlaceDAO>();
-            });
-            var mapper = config.CreateMapper();
-            var result = mapper.Map<List<MapLayerDAO>>(datas);
-            return result;
+                IconKey = x.IconKey,
+                Id = x.Id,
+                Name = x.Name,
+                MapPlaces = x.MapPlaces.Select(y=> new MapPlaceDAO()
+                {
+                    Id = y.Id,
+                    Name = y.Name,
+                    MapLayerId = x.Id,
+                    PlaceId = y.PlaceId,
+                }).ToList()
+            }).ToListAsync();
+
+            return datas;
+
+            //var config = new AutoMapper.MapperConfiguration(cfg =>
+            //{
+            //    cfg.CreateMap<MapLayer, MapLayerDAO>();
+            //});
+            //var mapper = config.CreateMapper();
+            //var result = mapper.Map<List<MapLayerDAO>>(datas);
+            //return result;
         }
 
     }

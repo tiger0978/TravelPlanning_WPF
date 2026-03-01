@@ -13,7 +13,7 @@ using TravelPlanning.Extensions;
 using TravelPlanning.Respositories;
 using TravelPlanning.Respositories.Models.DAOs;
 
-namespace TravelPlanning.Presenters
+namespace TravelPlanning.Presenters.Pages
 {
     public class CreateTravelPresenter : ICreateTravelPresenter
     {

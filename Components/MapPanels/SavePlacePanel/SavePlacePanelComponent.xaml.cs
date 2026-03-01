@@ -1,11 +1,11 @@
-﻿using GoogleMap.SDK.Contracts.GoogleAPI;
-using IoC_Container;
+﻿using IoC_Container.Attributes;
 using System.Windows.Controls;
 using TravelPlanning.Attributes;
 using Wpf.Ui.Controls;
 
 namespace TravelPlanning.Components.MapPanels.SavePlacePanel
 {
+    [Transient]
     [NavigationItem("清單", SymbolRegular.Bookmark24, 1)]
     /// <summary>
     /// SavePlacePanelComponent.xaml 的互動邏輯
@@ -14,12 +14,30 @@ namespace TravelPlanning.Components.MapPanels.SavePlacePanel
     {
         public SavePlacePanelContext Context { get; set; }
 
-        public SavePlacePanelComponent(IGoogleAPIContext apiContext, IComponentFactory componentFactory)
+        public SavePlacePanelComponent(SavePlacePanelContext context)
         {
             InitializeComponent();
-            var context = new SavePlacePanelContext(componentFactory);
             Context = context;
             DataContext = context;
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

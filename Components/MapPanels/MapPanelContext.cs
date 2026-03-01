@@ -5,6 +5,7 @@ using IoC_Container.Attributes;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TravelPlanning.Components.MapPanels.SearchPanel;
@@ -27,29 +28,14 @@ namespace TravelPlanning.Components.MapPanels
         public Dictionary<Type, UserControl> Pages = new Dictionary<Type, UserControl>();
 
 
-        public MapPanelContext(IGoogleAPIContext apiContext, IComponentFactory componentFactory)
+        public MapPanelContext(IGoogleAPIContext apiContext, IComponentFactory componentFactory, 
+            NavigationProvider navigationProvider)
         {
             PageItems = NavigationPageProvider.GetPages<NavigationPageItem>("TravelPlanning.Components.MapPanels");
-
-            CurrentComponent = (UserControl)Activator.CreateInstance(PageItems[0].TargetPageType, apiContext, componentFactory);
-           
-            
-
-            foreach (var item in PageItems) 
-            {
-                Pages.Add(item.TargetPageType, (UserControl)Activator.CreateInstance(item.TargetPageType, apiContext, componentFactory));
-            }
-
             ChangePageCommand = new RelayCommand<Type>(pageType =>
             {
-                if(!Pages.TryGetValue(pageType, out UserControl userControl))
-                {
-                    userControl = (UserControl)Activator.CreateInstance(pageType, apiContext, componentFactory);
-                    Pages.Add(pageType, userControl);
-                }
-                CurrentComponent = userControl;
+                navigationProvider.Navigate(pageType, null);
             });
-
 
             SaveMapPlaceCommand = new RelayCommand(() =>
             {

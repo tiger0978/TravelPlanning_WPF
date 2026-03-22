@@ -19,7 +19,7 @@ namespace TravelPlanning.Presenters.Components
             _mapPlaceRepository = mapPlaceRepository;
         }
 
-        public async Task SavePlace(SavePlaceDto savePlaceDto)
+        public async Task SavePlace(SavePlaceDTO savePlaceDto)
         {
             var mapPlace = await _mapPlaceRepository.GetMapPlaceByPlaceIdAsync(savePlaceDto.MapLayerId, savePlaceDto.PlaceId);
             if(mapPlace != null) 

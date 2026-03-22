@@ -51,5 +51,13 @@ namespace TravelPlanning.Components.SaveList
             get => (ICommand)GetValue(SelectedItemProperty);
             set => SetValue(SelectedItemProperty, value);
         }
+
+        private void MoreMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var menu = button.ContextMenu;
+            menu.PlacementTarget = button;
+            menu.IsOpen = true;
+        }
     }
 }

@@ -58,16 +58,16 @@
       <HintPath>packages\GMap.NET.WinPresentation.2.1.7\lib\net472\GMap.NET.WindowsPresentation.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMap.SDK.Contract, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\GoogleMap.SDK.WPF.1.0.4.6\lib\net472\GoogleMap.SDK.Contract.dll</HintPath>
+      <HintPath>packages\GoogleMap.SDK.WPF.1.0.5\lib\net472\GoogleMap.SDK.Contract.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMap.SDK.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\GoogleMap.SDK.WPF.1.0.4.6\lib\net472\GoogleMap.SDK.Core.dll</HintPath>
+      <HintPath>packages\GoogleMap.SDK.WPF.1.0.5\lib\net472\GoogleMap.SDK.Core.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMap.SDK.UI.WPF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\GoogleMap.SDK.WPF.1.0.4.6\lib\net472\GoogleMap.SDK.UI.WPF.dll</HintPath>
+      <HintPath>packages\GoogleMap.SDK.WPF.1.0.5\lib\net472\GoogleMap.SDK.UI.WPF.dll</HintPath>
     </Reference>
     <Reference Include="IoC_Container, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\GoogleMap.SDK.WPF.1.0.4.6\lib\net472\IoC_Container.dll</HintPath>
+      <HintPath>packages\GoogleMap.SDK.WPF.1.0.5\lib\net472\IoC_Container.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.6, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.9.0.6\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -193,6 +193,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Attributes\NavigationItemAttribute.cs" />
+    <Compile Include="Components\AutoComplete\AutoCompleteComponent.xaml.cs">
+      <DependentUpon>AutoCompleteComponent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\GMap\GoogleMapComponent.xaml.cs">
       <DependentUpon>GoogleMapComponent.xaml</DependentUpon>
     </Compile>
@@ -220,6 +223,9 @@
     </Compile>
     <Compile Include="Components\MapPanels\SearchPanel\SearchPanelContext.cs" />
     <Compile Include="Components\MapPanels\MapPanelContext.cs" />
+    <Compile Include="Components\PopUps\PlaceDetail.xaml.cs">
+      <DependentUpon>PlaceDetail.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\SaveList\Models\SaveListViewModel.cs" />
     <Compile Include="Components\SaveList\SaveListComponent.xaml.cs">
       <DependentUpon>SaveListComponent.xaml</DependentUpon>
@@ -229,12 +235,15 @@
       <DependentUpon>TravelCardComponent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\TravelCard\TravelCardContext.cs" />
+    <Compile Include="Contracts\AddSaveListContract.cs" />
     <Compile Include="Contracts\CreateTravelContract.cs" />
     <Compile Include="Contracts\DTOs\FavoriteTravelDTO.cs" />
-    <Compile Include="Contracts\DTOs\SavePlaceDto.cs" />
+    <Compile Include="Contracts\DTOs\SaveListDTO.cs" />
+    <Compile Include="Contracts\DTOs\SavePlaceDTO.cs" />
     <Compile Include="Contracts\DTOs\TravelPlanDTO.cs" />
     <Compile Include="Contracts\FavoriteTravelContract.cs" />
     <Compile Include="Contracts\HomeContract.cs" />
+    <Compile Include="Contracts\SaveListComponentContract.cs" />
     <Compile Include="Contracts\SaveListContract.cs" />
     <Compile Include="Contracts\SavePlaceContract.cs" />
     <Compile Include="Contracts\SearchPanelContract.cs" />
@@ -242,10 +251,17 @@
     <Compile Include="EventHandlers\TravelCardHandler.cs" />
     <Compile Include="Extensions\BitmapImageExtension.cs" />
     <Compile Include="Extensions\NavigationExtension.cs" />
+    <Compile Include="Messages\InitialMapOverlayMessage.cs" />
     <Compile Include="Messages\PlaceSelectedMessage.cs" />
+    <Compile Include="Messages\SaveListPlacesLoadedMessage.cs" />
+    <Compile Include="Models\DTOs\AddPlaceInputDTO.cs" />
+    <Compile Include="Models\DTOs\MapPlaceDTO.cs" />
+    <Compile Include="Models\DTOs\SavePlaceDTO.cs" />
     <Compile Include="Models\Enums\StartType.cs" />
     <Compile Include="Models\GridLengthAnimation.cs" />
     <Compile Include="Models\NavigationPageItem.cs" />
+    <Compile Include="Presenters\Components\AddSaveListPresenter.cs" />
+    <Compile Include="Presenters\Components\SaveListComponentPresenter.cs" />
     <Compile Include="Presenters\Components\SaveListPresenter.cs" />
     <Compile Include="Presenters\Components\SavePlacePresenter.cs" />
     <Compile Include="Presenters\Components\SearchPanelPresenter.cs" />
@@ -298,6 +314,10 @@
     <Compile Include="Views\TestWindow.xaml.cs">
       <DependentUpon>TestWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Components\AutoComplete\AutoCompleteComponent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\GMap\GoogleMapComponent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -319,6 +339,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Components\MapPanels\SearchPanel\SearchPanelComponent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\PopUps\PlaceDetail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

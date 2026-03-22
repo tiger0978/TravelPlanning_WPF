@@ -13,6 +13,6 @@ namespace TravelPlanning.Contracts
     }
     public interface ISearchPanelComponentPresenter
     {
-        Task SavePlace(SavePlaceDto savePlaceDto);
+        Task SavePlace(SavePlaceDTO savePlaceDto);
     }
 }

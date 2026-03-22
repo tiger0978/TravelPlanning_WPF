@@ -6,12 +6,10 @@ using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using TravelPlanning.Components.SaveList;
 using TravelPlanning.Components.SaveList.Models;
 using TravelPlanning.Contracts;
 using TravelPlanning.Contracts.DTOs;
@@ -66,7 +64,7 @@ namespace TravelPlanning.Components.MapPanels.SearchPanel
 
             this.SelectedItemCommand = new RelayCommand<SaveListViewModel>(x =>
             {
-                var savePlaceDto = new SavePlaceDto()
+                var savePlaceDto = new SavePlaceDTO()
                 {
                     MapLayerId = x.MapLayerId,
                     Name = x.Name,

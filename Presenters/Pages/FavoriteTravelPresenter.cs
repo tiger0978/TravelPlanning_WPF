@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TravelPlanning.Contracts;
 using TravelPlanning.Contracts.DTOs;
+using TravelPlanning.Models.DTOs;
 using TravelPlanning.Respositories;
 using TravelPlanning.Respositories.Models.DAOs;
+using TravelPlanning.Views.Pages.FavoriteTravel;
 
 namespace TravelPlanning.Presenters.Pages
 {
@@ -11,11 +15,14 @@ namespace TravelPlanning.Presenters.Pages
     {
         private readonly IMapPlaceRepository _mapPlaceRepository;
         private readonly IMapLayerRepository _mapLayerRepository;
+        private readonly IFavoriteTravelPage _favoriteTravelPage;
 
-        public FavoriteTravelPresenter(IMapLayerRepository mapLayerRepository, IMapPlaceRepository mapPlaceRepository)
+        public FavoriteTravelPresenter(IMapLayerRepository mapLayerRepository, IMapPlaceRepository mapPlaceRepository,
+            IFavoriteTravelPage favoriteTravelPage)
         {
             _mapLayerRepository = mapLayerRepository;
             _mapPlaceRepository = mapPlaceRepository;
+            _favoriteTravelPage = favoriteTravelPage;
         }
 
         public async Task CreateMapLayerAsync(string name)
@@ -27,6 +34,7 @@ namespace TravelPlanning.Presenters.Pages
         public async Task GetMapLayersAsync()
         {
             var mapLayers = await _mapLayerRepository.GetMapLayersAsync();
+         
         }
 
         public async Task GetMapPlacesByMapLayerId(Guid mapLayerId)
@@ -57,6 +65,19 @@ namespace TravelPlanning.Presenters.Pages
             return await _mapPlaceRepository.DeleteMapPlacesByMapperLayerId(maplayerId);
         }
 
-
+        public async Task<List<MapPlaceDTO>> GetAllMapPlacesASync()
+        {
+            var mapLayers = await _mapLayerRepository.GetMapLayersAsync();
+            var mapPlaces = mapLayers
+                .SelectMany(x => x.MapPlaces)
+                .Select(y => new MapPlaceDTO
+                {
+                    Id = y.Id,
+                    MapLayerId = y.MapLayerId,
+                    Name = y.Name,
+                    PlaceId = y.PlaceId,
+                }).ToList();
+            return mapPlaces;
+        }
     }
 }

@@ -21,7 +21,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="20">
+        <StackPanel Grid.Row="0" Margin="30,90,20,20">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -40,12 +40,12 @@
                         Cursor="IBeam"
                         FontSize="20"
                         FontWeight="SemiBold"
-                        Text="{Binding SaveListName}">
+                        Text="{Binding SaveListName, Mode=TwoWay}">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Visibility" Value="Visible" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditingName}" Value="True">
+                                    <DataTrigger Binding="{Binding IsEditing}" Value="True">
                                         <Setter Property="Visibility" Value="Collapsed" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -57,38 +57,39 @@
                     </TextBlock>
 
                     <!--  Edit  -->
-                    <ui:TextBox
+                    <TextBox
                         x:Name="EditName"
                         MinWidth="120"
                         Background="Transparent"
                         BorderThickness="0"
                         FontSize="20"
                         FontWeight="SemiBold"
-                        Text="{Binding SaveListName, Mode=TwoWay}">
-                        <ui:TextBox.Style>
-                            <Style TargetType="ui:TextBox">
+                        Text="{Binding SaveListName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
                                 <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsEditingName}" Value="True">
+                                    <DataTrigger Binding="{Binding IsEditing}" Value="True">
                                         <Setter Property="Visibility" Value="Visible" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </ui:TextBox.Style>
+                        </TextBox.Style>
 
-                        <ui:TextBox.InputBindings>
+                        <TextBox.InputBindings>
                             <KeyBinding Key="Enter" Command="{Binding EndEditNameCommand}" />
                             <KeyBinding Key="Escape" Command="{Binding CancelEditNameCommand}" />
-                        </ui:TextBox.InputBindings>
-                    </ui:TextBox>
+                        </TextBox.InputBindings>
+                    </TextBox>
                 </StackPanel>
             </Grid>
+
 
             <!--  Subtitle  -->
             <TextBlock
                 Margin="0,6,0,12"
                 Foreground="Gray"
-                Text=" 2 個地點" />
+                Text="{Binding SaveListCount, StringFormat={}{0} 個地點}" />
 
             <!--  Search  -->
             <Grid Margin="0,16,0,0">
@@ -130,19 +131,22 @@
         <!--  List  -->
         <ListView
             Grid.Row="1"
-            Margin="20"
+            Margin="20,5,20,0"
             BorderThickness="0"
-            ItemsSource="{Binding SaveLists}">
+            ItemsSource="{Binding SaveLists}"
+            ScrollViewer.VerticalScrollBarVisibility="Auto">
+
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border
-                        Width="380"
-                        Margin="0,0,0,12"
-                        Padding="10"
-                        CornerRadius="12">
+                        Width="390"
+                        Padding="8"
+                        Background="White"
+                        CornerRadius="10"
+                        Cursor="Hand">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="75" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
@@ -151,44 +155,69 @@
                             <Border
                                 Width="75"
                                 Height="75"
-                                Margin="0,0,10,0"
-                                CornerRadius="8">
-                                <Image Source="{Binding Cover}" />
+                                ClipToBounds="True"
+                                CornerRadius="6">
+                                <Image Source="{Binding Cover}" Stretch="Fill" />
                             </Border>
 
                             <!--  Info  -->
                             <StackPanel Grid.Column="1" Margin="10,0">
-                                <TextBlock FontWeight="SemiBold" Text="{Binding Name}" />
+                                <!--  Name  -->
                                 <TextBlock
-                                    Margin="0,0,6,0"
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Text="{Binding Name}" />
+
+                                <!--  Rating  -->
+                                <StackPanel Orientation="Horizontal">
+                                    <ItemsControl ItemsSource="{Binding Stars}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock
+                                                    Margin="1"
+                                                    FontSize="14"
+                                                    Foreground="#F9AB00"
+                                                    Text="{Binding Converter={StaticResource StarConverter}}" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                    <TextBlock
+                                        Margin="6,3,0,0"
+                                        FontSize="12"
+                                        Foreground="Gray"
+                                        Text="{Binding Rate}" />
+                                </StackPanel>
+
+                                <!--  Type  -->
+                                <TextBlock
                                     FontSize="12"
                                     Foreground="Gray"
-                                    Text="{Binding Rate}" />
-                                <ItemsControl ItemsSource="{Binding Stars}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock
-                                                Margin="1"
-                                                FontSize="16"
-                                                Foreground="#F9AB00"
-                                                Text="{Binding Converter={StaticResource StarConverter}}" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                                <TextBlock Text="{Binding Type}" />
+                                    Text="{Binding Type}" />
                             </StackPanel>
 
-                            <!--  Note  -->
-                            <TextBlock
+                            <!--  Right buttons  -->
+                            <StackPanel
                                 Grid.Column="2"
-                                VerticalAlignment="Center"
-                                Foreground="#1A73E8"
-                                Text="+ 附註" />
+                                VerticalAlignment="Top"
+                                Orientation="Horizontal">
+                                <Button
+                                    HorizontalAlignment="Center"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Cursor="Hand">
+                                    <ui:SymbolIcon
+                                        FontSize="16"
+                                        Foreground="#EA4335"
+                                        Symbol="Delete24" />
+                                </Button>
+                            </StackPanel>
                         </Grid>
                     </Border>
                 </DataTemplate>

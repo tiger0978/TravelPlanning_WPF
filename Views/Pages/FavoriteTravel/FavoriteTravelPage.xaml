@@ -1,35 +1,45 @@
-﻿<Page 
-    x:Class="TravelPlanning.Views.Pages.FavoriteTravel.FavoriteTravelPage" 
+﻿<Page
+    x:Class="TravelPlanning.Views.Pages.FavoriteTravel.FavoriteTravelPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:local="clr-namespace:TravelPlanning.Views.Pages.FavoriteTravel" 
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
-    mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800" Title="FavoriteTravel">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="clr-namespace:TravelPlanning.Components.MapPanels.SearchPanel"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:TravelPlanning.Views.Pages.FavoriteTravel"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mp="clr-namespace:TravelPlanning.Components.MapPanels"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="FavoriteTravel"
+    Loaded="Page_Loaded"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
 
     <Page.Resources>
+        <DataTemplate DataType="{x:Type mp:MapPanelContext}">
+            <mp:MapPanelComponent />
+        </DataTemplate>
         <Style x:Key="NoHoverButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="#CCC"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="#CCC" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
 
             <Style.Triggers>
-                <!-- 滑鼠經過也維持相同外觀 -->
+                <!--  滑鼠經過也維持相同外觀  -->
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="White"/>
-                    <Setter Property="BorderBrush" Value="#CCC"/>
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="BorderBrush" Value="#CCC" />
                 </Trigger>
 
-                <!-- 按下也維持相同外觀（或你想要的按下色） -->
+                <!--  按下也維持相同外觀（或你想要的按下色）  -->
                 <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="White"/>
+                    <Setter Property="Background" Value="White" />
                 </Trigger>
 
-                <!-- disabled 狀態可保持淡出 -->
+                <!--  disabled 狀態可保持淡出  -->
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value="0.6"/>
+                    <Setter Property="Opacity" Value="0.6" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -37,15 +47,31 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid Name="MapContainer" Grid.Column="0" Panel.ZIndex="1"></Grid>
-        
-        <Grid Grid.Column="0" Panel.ZIndex="2" >
+        <Grid
+            Name="MapContainer"
+            Grid.Column="0"
+            Panel.ZIndex="1" />
+
+        <Grid Grid.Column="0" Panel.ZIndex="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Grid Name="PlaceContainer"></Grid>
+            <Grid>
+                <ContentControl Name="MapPanel" Content="{Binding MapPanelContext}" />
+            </Grid>
+            <Grid>
+                <Popup
+                    Name="popup"
+                    AllowsTransparency="True"
+                    IsOpen="{Binding IsPopupOpen, UpdateSourceTrigger=PropertyChanged}"
+                    StaysOpen="False"
+                    VerticalOffset="-200">
+                    <ContentControl Content="{Binding PopupContent, UpdateSourceTrigger=PropertyChanged}" />
+                </Popup>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

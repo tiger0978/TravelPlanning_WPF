@@ -179,7 +179,7 @@
             </ScrollViewer>
         </Border>
 
-        <Border
+        <!--<Border
             Height="48"
             Margin="20,25,20,0"
             HorizontalAlignment="Stretch"
@@ -206,6 +206,6 @@
                     Foreground="#70757A"
                     Symbol="Search24" />
             </Grid>
-        </Border>
+        </Border>-->
     </Grid>
 </UserControl>

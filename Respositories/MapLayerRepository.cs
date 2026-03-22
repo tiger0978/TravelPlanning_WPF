@@ -1,10 +1,8 @@
 ﻿using GoogleMap.SDK.Core.Utility;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TravelPlanning.Models.Entities;
 using TravelPlanning.Respositories.Models.DAOs;
@@ -32,20 +30,17 @@ namespace TravelPlanning.Respositories
         public async Task<bool> DeleteMapLayerByIdAsync(Guid id)
         {
             var entity = await _db.MapLayers.FirstOrDefaultAsync(x => x.Id == id);
-            var res = _db.MapLayers.Remove(entity);
-            return res != null;
+            _db.MapLayers.Remove(entity);
+            var res = await _db.SaveChangesAsync();
+            return res > 0;
         }
 
         public async Task<MapLayerDAO> GetMapLayerByIdAsync(Guid id)
         {
-
             var data = await _db.MapLayers.FirstOrDefaultAsync(x => x.Id == id);
-            var config = new AutoMapper.MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<MapPlace, MapPlaceDAO>();
-            });
-            var mapper = config.CreateMapper();
-            var result = mapper.Map<MapLayerDAO>(data);
+            var mapPlaces = Mapper.Map<MapPlace, MapPlaceDAO>(data.MapPlaces).ToList();
+            var result = Mapper.Map<MapLayer,MapLayerDAO>(data);
+            result.MapPlaces = mapPlaces;
             return result;
         }
 
@@ -56,7 +51,7 @@ namespace TravelPlanning.Respositories
                 IconKey = x.IconKey,
                 Id = x.Id,
                 Name = x.Name,
-                MapPlaces = x.MapPlaces.Select(y=> new MapPlaceDAO()
+                MapPlaces =  x.MapPlaces.Select(y=> new MapPlaceDAO()
                 {
                     Id = y.Id,
                     Name = y.Name,
@@ -64,17 +59,15 @@ namespace TravelPlanning.Respositories
                     PlaceId = y.PlaceId,
                 }).ToList()
             }).ToListAsync();
-
             return datas;
-
-            //var config = new AutoMapper.MapperConfiguration(cfg =>
-            //{
-            //    cfg.CreateMap<MapLayer, MapLayerDAO>();
-            //});
-            //var mapper = config.CreateMapper();
-            //var result = mapper.Map<List<MapLayerDAO>>(datas);
-            //return result;
         }
 
+        public async Task<bool> UpdateNameAsync(Guid id, string name)
+        {
+            var mapLayer = await _db.MapLayers.FirstOrDefaultAsync(x => x.Id == id);
+            mapLayer.Name = name;
+            var result = await _db.SaveChangesAsync();
+            return result > 0;
+        }
     }
 }

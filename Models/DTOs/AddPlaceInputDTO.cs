@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TravelPlanning.Contracts.DTOs
+namespace TravelPlanning.Models.DTOs
 {
-    public class SavePlaceDTO
+    public class AddPlaceInputDTO
     {
-        public Guid Id { get; set; }
         public Guid MapLayerId { get; set; }
         public string PlaceId { get; set; }
-        public string Name { get; set; }
+        public string PlaceName { get; set; }
     }
 }

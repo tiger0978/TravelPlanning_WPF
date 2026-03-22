@@ -5,8 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
 using TravelPlanning.Attributes;
-using TravelPlanning.Components.MapPanels.SearchPanel;
-using TravelPlanning.Models;
 using TravelPlanning.Utilties.Navigation;
 
 namespace TravelPlanning.Utilties
@@ -31,23 +29,23 @@ namespace TravelPlanning.Utilties
             ContentControl = control;
         }
 
-
-        public void Navigate(Type pageType, object parm)
+        public void ClearControl() 
         {
-            if (!Pages.TryGetValue(pageType, out UserControl userControl))
-            {
-                var item = pageItems.FirstOrDefault(x => x == pageType);
-                userControl = (UserControl)componentFactory.Create(item);
+            ContentControl.Content = null;
+        }
 
-                Pages.Add(item, userControl);
-            }
-
-            if (userControl is INavigationAware aware)
+        public UserControl Navigate(Type pageType, object parm)
+        {
+            var item = pageItems.FirstOrDefault(x => x == pageType);
+            var userControl = (UserControl)componentFactory.Create(item);
+            if (parm != null && userControl.DataContext is INavigationAware aware)
             {
                 aware.SendAware(parm);
             }
             this.ContentControl.Content = userControl;
+            return userControl;
         }
+
         public static List<T> GetPages<T>(string typeNamspace)
         {
             List<T> pages = Assembly.GetExecutingAssembly().DefinedTypes

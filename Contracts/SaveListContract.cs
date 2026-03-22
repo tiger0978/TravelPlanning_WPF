@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TravelPlanning.Respositories.Models.DAOs;
+using TravelPlanning.Contracts.DTOs;
 
 namespace TravelPlanning.Contracts
 {
-    public interface ISaveListComponentPresenter
+    public interface ISaveListPresenter
     {
-        Task GetMapLayers();
+        Task<Guid> AddMapLayer(SaveListDTO saveListDTO);
     }
-    public interface ISaveListComponentView
+    public interface ISaveListView 
     {
-        void MapLayerResponse(List<MapLayerDAO> mapLayers);
     }
 }

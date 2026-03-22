@@ -14,7 +14,7 @@ namespace TravelPlanning.Components.MapPanels.SavePlacePanel
     {
         public SavePlacePanelContext Context { get; set; }
 
-        public SavePlacePanelComponent(SavePlacePanelContext context)
+        public SavePlacePanelComponent( SavePlacePanelContext context)
         {
             InitializeComponent();
             Context = context;

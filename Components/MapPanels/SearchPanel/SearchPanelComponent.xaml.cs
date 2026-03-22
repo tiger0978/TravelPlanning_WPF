@@ -1,20 +1,12 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GoogleMap.SDK.Contracts.GoogleAPI.Models.PlaceDetail.Response;
-using GoogleMap.SDK.UI.WPF.Components.AutoComplete.Views;
+﻿using GoogleMap.SDK.Contracts.GoogleAPI.Models.PlaceDetail.Response;
 using IoC_Container;
 using IoC_Container.Attributes;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using TravelPlanning.Attributes;
-using TravelPlanning.Messages;
-using Wpf.Ui.Controls;
-using static GoogleMap.SDK.Contracts.Components.AutoComplete.Contracts.AutoCompleteContract;
 
 namespace TravelPlanning.Components.MapPanels.SearchPanel
 {
     [Transient]
-    [NavigationItem("搜尋", SymbolRegular.SearchSquare24, 0)]
+    //[NavigationItem("搜尋", SymbolRegular.SearchSquare24, 0)]
     /// <summary>
     /// SearchPanel.xaml 的互動邏輯
     /// </summary>
@@ -29,28 +21,10 @@ namespace TravelPlanning.Components.MapPanels.SearchPanel
         public SearchPanelComponent(SearchPanelContext context, IComponentFactory componentFactory)
         {
             InitializeComponent();
-
-            var iAutoComplete = componentFactory.Create<IAutoCompleteView>(typeof(PlaceAutoCompleteView));
-            iAutoComplete.SwitchMode();
-            var placeAutoComplete = (Control)iAutoComplete;
-            placeAutoComplete.FontSize = 16;
-            placeAutoComplete.VerticalAlignment = VerticalAlignment.Center;
-            placeAutoComplete.Background = Brushes.Transparent;
-            placeAutoComplete.Padding = new Thickness(5, 0, 0, 0);
-            placeAutoComplete.BorderThickness = new Thickness(0);
-            PlaceAutoCompleteView view = (PlaceAutoCompleteView)iAutoComplete;
-            view.SelectedItem += OnReceivedPlaceDetails;
-            PlaceContainer.Children.Add(placeAutoComplete);
-            Grid.SetRow(placeAutoComplete, 0);
-            Grid.SetColumn(placeAutoComplete, 0);
+            
             Context = context;
             DataContext = context;
         }
 
-        private void OnReceivedPlaceDetails(object sender, PlaceDetailResponse e)
-        {
-            WeakReferenceMessenger.Default.Send(new PlaceSelectedMessage(e));
-            Context.RenderModel(e);
-        }
     }
 }

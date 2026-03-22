@@ -12,6 +12,7 @@ namespace TravelPlanning.Respositories
         Task<List<MapLayerDAO>> GetMapLayersAsync();
         Task<MapLayerDAO> GetMapLayerByIdAsync(Guid id);
         Task<MapLayerDAO> AddMapLayerAsync(MapLayerDAO mapLayerDAO);
+        Task<bool> UpdateNameAsync(Guid id, string name);
         Task<bool> DeleteMapLayerByIdAsync(Guid id);
     }
 }

@@ -14,26 +14,48 @@ using TravelPlanning.Contracts;
 using TravelPlanning.Contracts.DTOs;
 using System.Collections.ObjectModel;
 using IoC_Container.Attributes;
+using TravelPlanning.Components.MapPanels.SearchPanel;
+using PropertyChanged;
+using System.Collections.Generic;
+using TravelPlanning.Models.DTOs;
+using System.Threading.Tasks;
+using TravelPlanning.Components.MapPanels;
 
 namespace TravelPlanning.Views.Pages.FavoriteTravel
 {
     [Transient]
+    [AddINotifyPropertyChangedInterface]
     public class FavoriteTravelContext : IFavoriteTravelPage
     {
         public PlaceDetailResponse SelectedPlaceDetail { get; set; }
-        public ObservableCollection<FavoriteTravelDTO> Favorites { get; set; } = new ObservableCollection<FavoriteTravelDTO>();
-        public ICommand SaveMapPlaceCommand { get; set; }
-        public ICommand DeleteMapPlaceCommand { get; set; }
-        public FavoriteTravelContext(IPresenterFactory presenterFactory) 
+        private readonly IFavoriteTravelPresenter _presenter;
+        //public ObservableCollection<FavoriteTravelDTO> Favorites { get; set; } = new ObservableCollection<FavoriteTravelDTO>();
+        //public ICommand SaveMapPlaceCommand { get; set; }
+        //public ICommand DeleteMapPlaceCommand { get; set; }
+
+        public List<MapPlaceDTO> MapPlaces { get; set; }
+        public bool IsPopupOpen { get; set; }
+        public UserControl PopupContent { get; set; }
+
+        public MapPanelContext MapPanelContext { get; set; }
+        public FavoriteTravelContext(IPresenterFactory presenterFactory, IComponentFactory componentFactory, MapPanelContext mapPanelContext) 
         {
             var presenter = presenterFactory.CreatePresneter<IFavoriteTravelPresenter, IFavoriteTravelPage>(this);
-            SaveMapPlaceCommand = new RelayCommand(() =>
-            {
-                var mapPlaceDTO = new FavoriteTravelDTO()
-                {
-                    PlaceId = SelectedPlaceDetail.result.place_id
-                };
-            });
+            _presenter = presenter;
+            MapPanelContext = mapPanelContext;
+            //SaveMapPlaceCommand = new RelayCommand(() =>
+            //{
+            //    var mapPlaceDTO = new FavoriteTravelDTO()
+            //    {
+            //        PlaceId = SelectedPlaceDetail.result.place_id
+            //    };
+            //});
+            PopupContent = componentFactory.Create<SearchPanelComponent>();
+        }
+
+        public async Task<List<MapPlaceDTO>> GetAllMapPlaces()
+        {
+            return await _presenter.GetAllMapPlacesASync();
         }
     }
 }

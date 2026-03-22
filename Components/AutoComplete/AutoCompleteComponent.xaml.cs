@@ -1,28 +1,23 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GoogleMap.SDK.Contracts.GoogleAPI.Models.PlaceDetail.Response;
+﻿using GoogleMap.SDK.Contracts.GoogleAPI.Models.PlaceDetail.Response;
 using GoogleMap.SDK.UI.WPF.Components.AutoComplete.Views;
 using IoC_Container;
-using IoC_Container.Attributes;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
-using TravelPlanning.Messages;
-using TravelPlanning.Models.DTOs;
 using static GoogleMap.SDK.Contracts.Components.AutoComplete.Contracts.AutoCompleteContract;
 
-namespace TravelPlanning.Components.MapPanels.AddSavePlaceList
+namespace TravelPlanning.Components.AutoComplete
 {
-    [Transient]
-    //[NavigationItem("路線規劃", SymbolRegular.Directions24, 3)]
     /// <summary>
-    /// AddSaveListComponent.xaml 的互動邏輯
+    /// AutoCompleteComponent.xaml 的互動邏輯
     /// </summary>
-    public partial class AddSaveListComponent : UserControl
+    public partial class AutoCompleteComponent : UserControl
     {
-        private readonly AddSaveListContext _context;
-        public AddSaveListComponent(IComponentFactory componentFactory, IPresenterFactory presenterFactory)
+        public AutoCompleteComponent()
         {
             InitializeComponent();
+            var componentFactory = App.provider.GetService<IComponentFactory>();
             var iAutoComplete = componentFactory.Create<IAutoCompleteView>(typeof(PlaceAutoCompleteView));
             iAutoComplete.SwitchMode();
             var placeAutoComplete = (Control)iAutoComplete;
@@ -33,22 +28,28 @@ namespace TravelPlanning.Components.MapPanels.AddSavePlaceList
             placeAutoComplete.BorderThickness = new Thickness(0);
             PlaceAutoCompleteView view = (PlaceAutoCompleteView)iAutoComplete;
             view.SelectedItem += OnReceivedPlaceDetails;
-            PlaceContainer.Children.Add(placeAutoComplete);
+            AutoCompleteContainer.Children.Add(placeAutoComplete);
             Grid.SetRow(placeAutoComplete, 0);
             Grid.SetColumn(placeAutoComplete, 0);
-            _context = new AddSaveListContext(presenterFactory);
-            DataContext = _context;
         }
+
         private void OnReceivedPlaceDetails(object sender, PlaceDetailResponse e)
         {
-            AddPlaceInputDTO addPlaceInput = new AddPlaceInputDTO()
-            {
-                MapLayerId = _context.Id,
-                PlaceId = e.result.place_id,
-                PlaceName = e.result.name
-            };
-            _context.AddPlace(addPlaceInput);
-            WeakReferenceMessenger.Default.Send(new PlaceSelectedMessage(e));
+            SelectedItemCommand?.Execute(e);
+        }
+
+        public static readonly DependencyProperty SelectedItemProperty =
+         DependencyProperty.Register(
+              nameof(SelectedItemCommand),
+              typeof(ICommand),
+              typeof(AutoCompleteComponent),
+              new PropertyMetadata(null));
+
+
+        public ICommand SelectedItemCommand
+        {
+            get => (ICommand)GetValue(SelectedItemProperty);
+            set => SetValue(SelectedItemProperty, value);
         }
     }
 }

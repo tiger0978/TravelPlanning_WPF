@@ -23,9 +23,10 @@
 * **組件溝通**: Message / Event Bus (用於跨 ViewModel/Presenter 溝通，如 `PlaceSelectedMessage`)
 * **外部服務**: 自建 Google API SDK, GMap SDK
 
+<img width="865" height="343" alt="image" src="https://github.com/user-attachments/assets/960d0112-fc66-4f5f-9007-349b8f37b6a5" />
 
 <img width="865" height="375" alt="image" src="https://github.com/user-attachments/assets/2195c1ee-c090-49c0-bac5-4e7efd6c6349" />
 
-![Uploading image.png…]()
+
 
 

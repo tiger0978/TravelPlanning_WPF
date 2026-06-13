@@ -23,21 +23,3 @@ namespace TravelPlanning.Components.MapPanels.SavePlacePanel
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

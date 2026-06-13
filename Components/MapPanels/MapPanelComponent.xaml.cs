@@ -1,14 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using GoogleMap.SDK.Contracts.GoogleAPI.Models.PlaceDetail.Response;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
-using TravelPlanning.Components.MapPanels.SearchPanel;
-using TravelPlanning.Messages;
 using TravelPlanning.Models;
-using TravelPlanning.Utilties;
-using Wpf.Ui.Controls;
 
 namespace TravelPlanning.Components.MapPanels
 {

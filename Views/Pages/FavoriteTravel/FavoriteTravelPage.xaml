@@ -9,9 +9,9 @@
     xmlns:mp="clr-namespace:TravelPlanning.Components.MapPanels"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="FavoriteTravel"
-    Loaded="Page_Loaded"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
 
@@ -65,11 +65,16 @@
             <Grid>
                 <Popup
                     Name="popup"
+                    Width="350"
+                    MaxHeight="650"
                     AllowsTransparency="True"
-                    IsOpen="{Binding IsPopupOpen, UpdateSourceTrigger=PropertyChanged}"
+                    HorizontalOffset="-50"
+                    IsOpen="{Binding IsPopupOpen}"
+                    Placement="Left"
+                    PlacementTarget="{Binding ElementName=MapPanel}"
                     StaysOpen="False"
-                    VerticalOffset="-200">
-                    <ContentControl Content="{Binding PopupContent, UpdateSourceTrigger=PropertyChanged}" />
+                    VerticalOffset="50">
+                    <ContentControl Content="{Binding PopupContent}" />
                 </Popup>
             </Grid>
         </Grid>

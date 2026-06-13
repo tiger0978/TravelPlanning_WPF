@@ -13,6 +13,6 @@ namespace TravelPlanning.Contracts
     }
     public interface ICreateTravelPresenter 
     {
-        Task AddTravelPlan(TravelPlanDTO travelPlan);
+        Task AddTravelPlanAsync(TravelPlanDTO travelPlan);
     }
 }

@@ -1,4 +1,5 @@
-﻿using IoC_Container;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using IoC_Container;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -6,12 +7,14 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TravelPlanning.Components.SaveList.Models;
 using TravelPlanning.Contracts;
+using TravelPlanning.Messages;
 using TravelPlanning.Respositories.Models.DAOs;
 using TravelPlanning.Utilties;
 using Wpf.Ui.Controls;
@@ -31,10 +34,19 @@ namespace TravelPlanning.Components.SaveList
             IPresenterFactory presenterFactory = App.provider.GetService<IPresenterFactory>();
             var presenter = presenterFactory.CreatePresneter<ISaveListComponentPresenter, ISaveListComponentView>(this);
             _presenter = presenter;
-            presenter.GetMapLayers();
-            DeleteSaveListCommand = new RelayCommand<Guid>(x =>
+            _ = InitializeAsync();
+            //presenter.GetMapLayers();
+            DeleteSaveListCommand = new RelayCommand<Guid>(id =>
             {
-                _presenter.DeleteMapLayers(x);
+                _presenter.DeleteMapLayers(id);
+                WeakReferenceMessenger.Default.Send(new DeleteMapLayerMessage(id));
+            });
+            HideLayerCommand = new RelayCommand<Guid>(id =>
+            {
+                var item = SaveLists.FirstOrDefault(x => x.MapLayerId == id);
+                if (item == null) return;
+                WeakReferenceMessenger.Default.Send(new HideMapLayerMessage(id, item.IsHidden));
+                item.IsHidden = !item.IsHidden;
             });
         }
 
@@ -45,10 +57,13 @@ namespace TravelPlanning.Components.SaveList
                 MapLayerId = x.Id,
                 Name = x.Name,
                 IconKey = (SymbolRegular)Enum.Parse(typeof(SymbolRegular), x.IconKey),
-                Description = $"{x.MapPlaces.Count} 個景點"
+                Description = $"{x.MapPlaces.Count()} 個景點"
             }).ToList());
+        }
 
-
+        private async Task InitializeAsync()
+        {
+            await _presenter.GetMapLayers();
         }
     }
 }

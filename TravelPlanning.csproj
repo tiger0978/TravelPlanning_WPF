@@ -57,6 +57,9 @@
     <Reference Include="GMap.NET.WindowsPresentation, Version=2.1.7.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
       <HintPath>packages\GMap.NET.WinPresentation.2.1.7\lib\net472\GMap.NET.WindowsPresentation.dll</HintPath>
     </Reference>
+    <Reference Include="GongSolutions.WPF.DragDrop, Version=4.0.0.0, Culture=neutral, PublicKeyToken=91f1945125b7a587, processorArchitecture=MSIL">
+      <HintPath>packages\gong-wpf-dragdrop.4.0.0\lib\net462\GongSolutions.WPF.DragDrop.dll</HintPath>
+    </Reference>
     <Reference Include="GoogleMap.SDK.Contract, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\GoogleMap.SDK.WPF.1.0.5\lib\net472\GoogleMap.SDK.Contract.dll</HintPath>
     </Reference>
@@ -247,13 +250,20 @@
     <Compile Include="Contracts\SaveListContract.cs" />
     <Compile Include="Contracts\SavePlaceContract.cs" />
     <Compile Include="Contracts\SearchPanelContract.cs" />
+    <Compile Include="Contracts\TravelPlanInfoContract.cs" />
+    <Compile Include="Converters\CommentStarCoverter.cs" />
     <Compile Include="Converters\StarConverter.cs" />
+    <Compile Include="Converters\TrafficWayConverter.cs" />
     <Compile Include="EventHandlers\TravelCardHandler.cs" />
     <Compile Include="Extensions\BitmapImageExtension.cs" />
     <Compile Include="Extensions\NavigationExtension.cs" />
+    <Compile Include="Helpers\TimeOptionsHelper.cs" />
+    <Compile Include="Messages\DeleteMapLayerMessage.cs" />
+    <Compile Include="Messages\HideMapLayerMessage.cs" />
     <Compile Include="Messages\InitialMapOverlayMessage.cs" />
     <Compile Include="Messages\PlaceSelectedMessage.cs" />
     <Compile Include="Messages\SaveListPlacesLoadedMessage.cs" />
+    <Compile Include="Messages\TravelPlanInfo\RouteRenderMessage.cs" />
     <Compile Include="Models\DTOs\AddPlaceInputDTO.cs" />
     <Compile Include="Models\DTOs\MapPlaceDTO.cs" />
     <Compile Include="Models\DTOs\SavePlaceDTO.cs" />
@@ -266,7 +276,10 @@
     <Compile Include="Presenters\Components\SavePlacePresenter.cs" />
     <Compile Include="Presenters\Components\SearchPanelPresenter.cs" />
     <Compile Include="Presenters\Pages\FavoriteTravelPresenter.cs" />
+    <Compile Include="Presenters\Pages\TravelPlanInfoPresenter.cs" />
     <Compile Include="Respositories\IMapPlaceRepository.cs" />
+    <Compile Include="Respositories\ITravelPlanDayRepository.cs" />
+    <Compile Include="Respositories\TravelPlanDayRepository.cs" />
     <Compile Include="Respositories\Models\DAOs\MapLayerDAO.cs" />
     <Compile Include="Respositories\Models\DAOs\MapPlaceDAO.cs" />
     <Compile Include="Respositories\Models\DAOs\TravelDayDAO.cs" />
@@ -308,8 +321,24 @@
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\Home\HomeContext.cs" />
-    <Compile Include="Views\Pages\PlaceSearch\PlaceSearch.xaml.cs">
-      <DependentUpon>PlaceSearch.xaml</DependentUpon>
+    <Compile Include="Views\Pages\SearchPlace\Comment\CommentPage.xaml.cs">
+      <DependentUpon>CommentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\SearchPlace\Comment\CommentPageContext.cs" />
+    <Compile Include="Views\Pages\SearchPlace\OverView\OverViewPage.xaml.cs">
+      <DependentUpon>OverViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\SearchPlace\OverView\OverViewPageContext.cs" />
+    <Compile Include="Views\Pages\TravelPlanInfo\Models\AddTravelPlaceDTO.cs" />
+    <Compile Include="Views\Pages\TravelPlanInfo\Models\DeleteTravelPlaceDTO.cs" />
+    <Compile Include="Views\Pages\TravelPlanInfo\Models\TravelInfoPlaceViewModel.cs" />
+    <Compile Include="Views\Pages\TravelPlanInfo\Models\TravelPlaceDTO.cs" />
+    <Compile Include="Views\Pages\TravelPlanInfo\Models\TravelPlanDayDTO.cs" />
+    <Compile Include="Views\Pages\TravelPlanInfo\Models\TravelPlanDTO.cs" />
+    <Compile Include="Views\Pages\TravelPlanInfo\Models\TravelInfoDayViewModel.cs" />
+    <Compile Include="Views\Pages\TravelPlanInfo\TravelPlanInfoContext.cs" />
+    <Compile Include="Views\Pages\TravelPlanInfo\TravelPlanInfoPage.xaml.cs">
+      <DependentUpon>TravelPlanInfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TestWindow.xaml.cs">
       <DependentUpon>TestWindow.xaml</DependentUpon>
@@ -370,7 +399,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Pages\PlaceSearch\PlaceSearch.xaml">
+    <Page Include="Views\Pages\SearchPlace\Comment\CommentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\SearchPlace\OverView\OverViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\TravelPlanInfo\TravelPlanInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

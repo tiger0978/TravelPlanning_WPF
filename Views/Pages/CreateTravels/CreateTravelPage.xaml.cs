@@ -18,7 +18,7 @@ namespace TravelPlanning.Views.Pages.CreateTravels
             this.DataContext = new CreateTravelContext(presenterFactory);
             //var presenter = presenterFactory.CreatePresneter<ICreateTravelPresenter, ICreateTravelView>(this);
             //var travelPlanDto = new TravelPlanDTO(Context.Title,Context.Description, Context.Days, Context.StartedDate, Context.Cover);
-            //presenter.AddTravelPlan(travelPlanDto);
+            //presenter.AddTravelPlanAsync(travelPlanDto);
         }
 
     }

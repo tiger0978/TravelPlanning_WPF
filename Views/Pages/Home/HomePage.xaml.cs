@@ -1,4 +1,5 @@
-﻿using GoogleMap.SDK.Core.Utility;
+﻿using GoogleMap.SDK.Contracts.GoogleAPI;
+using GoogleMap.SDK.Core.Utility;
 using IoC_Container;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,9 @@ using TravelPlanning.EventHandlers;
 using TravelPlanning.Presenters;
 using TravelPlanning.Respositories.Models.DAOs;
 using TravelPlanning.Views.Pages.CreateTravels;
+using TravelPlanning.Views.Pages.TravelPlanInfo;
 using Wpf.Ui;
+using Wpf.Ui.Abstractions;
 
 namespace TravelPlanning.Views.Pages.Home
 {
@@ -31,11 +34,14 @@ namespace TravelPlanning.Views.Pages.Home
     /// 
     public partial class HomePage : Page
     {
-        public HomePage(IPresenterFactory presenterFactory, IContentDialogService dialogService)
+        public HomePage(IPresenterFactory presenterFactory, 
+            IContentDialogService dialogService, 
+            INavigationService navigationService,
+            IGoogleAPIContext googleAPIContext)
         {
             InitializeComponent();
             dialogService.SetDialogHost(DialogHost);
-            this.DataContext = new HomeContext(presenterFactory, dialogService);
+            this.DataContext = new HomeContext(presenterFactory, dialogService, navigationService, googleAPIContext);
         }
     }
 }

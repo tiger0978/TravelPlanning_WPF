@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using GoogleMap.SDK.Contracts.GoogleAPI;
 using GoogleMap.SDK.Contracts.GoogleAPI.Models.PlaceDetail.Response;
-using IoC_Container;
 using IoC_Container.Attributes;
 using PropertyChanged;
 using System;
@@ -9,11 +7,9 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using TravelPlanning.Components.MapPanels.SearchPanel;
-using TravelPlanning.Contracts.DTOs;
 using TravelPlanning.Messages;
 using TravelPlanning.Models;
 using TravelPlanning.Utilties;
-using Wpf.Ui.Controls;
 
 namespace TravelPlanning.Components.MapPanels
 {

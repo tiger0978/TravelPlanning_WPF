@@ -1,17 +1,20 @@
-﻿<Page x:Class="TravelPlanning.Views.Pages.Home.HomePage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:TravelPlanning.Views.Pages.Home"
-      xmlns:component="clr-namespace:TravelPlanning.Components.TravelCard"
-
-    mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Home">
+﻿<Page
+    x:Class="TravelPlanning.Views.Pages.Home.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:component="clr-namespace:TravelPlanning.Components.TravelCard"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:TravelPlanning.Views.Pages.Home"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Home"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
 
     <Grid>
-        <ItemsControl ItemsSource="{Binding TravelCards}" >
+        <ItemsControl ItemsSource="{Binding TravelCards}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" />
@@ -19,10 +22,17 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <component:TravelCardComponent Margin="40,40,10,10"></component:TravelCardComponent>
+
+                    <component:TravelCardComponent Margin="40,40,10,10">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                <i:InvokeCommandAction Command="{Binding DataContext.CardClickCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </component:TravelCardComponent>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <ContentPresenter x:Name="DialogHost"/>
+        <ContentPresenter x:Name="DialogHost" />
     </Grid>
 </Page>

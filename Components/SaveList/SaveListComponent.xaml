@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -122,7 +123,7 @@
                                         Command="{Binding PlacementTarget.Tag.HideLayerCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                         CommandParameter="{Binding MapLayerId}"
                                         Foreground="#202124"
-                                        Header="隱藏此清單" />
+                                        Header="{Binding VisibilityText}" />
                                     <MenuItem
                                         Command="{Binding PlacementTarget.Tag.DeleteSaveListCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                         CommandParameter="{Binding MapLayerId}"

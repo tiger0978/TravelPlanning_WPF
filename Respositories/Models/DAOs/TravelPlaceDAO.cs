@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoogleMap.SDK.Contracts.Commons.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,6 +15,12 @@ namespace TravelPlanning.Respositories.Models.DAOs
         public Guid TravelDayId { get; set; }
         public string PlaceId { get; set; }
         public string Name { get; set; }
-        public TimeSpan? TravelTime { get; set; }
+        public DateTime TravelTime { get; set; }
+        public int Duration { get; set; }
+        public bool HasArrivedTime { get; set; }
+        public int TrafficDuration { get; set; }
+        public TrafficMode TrafficType { get; set; }
+        public DateTime? LastPlaceLeavingTime { get; set; }
+
     }
 }

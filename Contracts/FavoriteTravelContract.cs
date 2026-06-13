@@ -16,7 +16,7 @@ namespace TravelPlanning.Contracts
         Task CreateMapLayerAsync(string name);
         Task GetMapLayersAsync();
         Task<List<MapPlaceDTO>> GetAllMapPlacesASync();
-        Task GetMapPlacesByMapLayerId(Guid mapLayerId);
+        Task<List<MapPlaceDTO>>GetMapPlacesByMapLayerId(Guid mapLayerId);
         Task CreateMapPlaceAsync(FavoriteTravelDTO favoriteTravelDTO);
         Task<bool> DeleteMapPlaceByIdAsync(Guid id);
         Task<bool> DeleteMapPlaceByMapLayerIdAsync(Guid maplayerId);

@@ -1,4 +1,5 @@
-﻿using IoC_Container;
+﻿using GoogleMap.SDK.Contracts.GoogleAPI;
+using IoC_Container;
 using IoC_Container.Attributes;
 using PropertyChanged;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using TravelPlanning.Contracts;
 using TravelPlanning.Contracts.DTOs;
 using TravelPlanning.EventHandlers;
 using TravelPlanning.Utilties;
+using TravelPlanning.Views.Pages.TravelPlanInfo;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -24,11 +26,15 @@ namespace TravelPlanning.Views.Pages.Home
         public ObservableCollection<TravelCardContext> TravelCards { get; set; } = new ObservableCollection<TravelCardContext>() { };
 
         public ICommand DeleteCommand { get; set; }
+        public ICommand CardClickCommand { get; set; }
         private IContentDialogService _dialogService;
         private IHomePresenter _presenter;
 
 
-        public HomeContext(IPresenterFactory presenterFactory, IContentDialogService dialogService) 
+        public HomeContext(IPresenterFactory presenterFactory,
+            IContentDialogService dialogService, 
+            INavigationService navigationService,
+            IGoogleAPIContext googleAPIContext) 
         {
             var presenter = presenterFactory.CreatePresneter<IHomePresenter, IHomePage>(this);
             _presenter = presenter;
@@ -40,6 +46,10 @@ namespace TravelPlanning.Views.Pages.Home
                 await DeleteCard(card);
             });
 
+            CardClickCommand = new RelayCommand<TravelCardContext>((cardContext) =>
+            {
+                navigationService.Navigate(typeof(TravelPlanInfoPage), new TravelPlanInfoContext(cardContext.Id, presenterFactory));
+            });
         }
 
         public void RenderPage(List<TravelPlanDTO> plans)

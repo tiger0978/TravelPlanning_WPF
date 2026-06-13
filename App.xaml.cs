@@ -16,6 +16,9 @@ using TravelPlanning.Respositories;
 using TravelPlanning.Respositories.Models.Entities;
 using TravelPlanning.Utilties;
 using TravelPlanning.Views;
+using TravelPlanning.Views.Pages.SearchPlace.Comment;
+using TravelPlanning.Views.Pages.SearchPlace.OverView;
+using TravelPlanning.Views.Pages.TravelPlanInfo;
 using Wpf.Ui;
 using Wpf.Ui.DependencyInjection;
 
@@ -29,42 +32,53 @@ namespace TravelPlanning
         public static IServiceProvider provider;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            var services = new ServiceCollection();
-            services.AddGoogleMapCoreRegistration();
-            services.AddGoogleMapWPFMapRegistration();
-            services.AddTransient<Window, MainTravelWindow>();
-            services.AddTransient<ITravelRepository,TravelRepository>();
-            services.AddTransient<DatabaseContext, DatabaseContext>();
-            services.AddNavigationViewPageProvider();
-            services.AddSingleton<INavigationService, NavigationService>();
-            services.AddSingleton<IContentDialogService, ContentDialogService>();
-            // services.AddSingleton<IPageService>
-            services.AddPage();
+            try
+            {
+                var services = new ServiceCollection();
+                services.AddGoogleMapCoreRegistration();
+                services.AddGoogleMapWPFMapRegistration();
+                services.AddTransient<Window, MainTravelWindow>();
+                services.AddTransient<ITravelRepository, TravelRepository>();
+                services.AddTransient<DatabaseContext, DatabaseContext>();
+                services.AddNavigationViewPageProvider();
+                services.AddSingleton<INavigationService, NavigationService>();
+                services.AddSingleton<IContentDialogService, ContentDialogService>();
+                // services.AddSingleton<IPageService>
+                services.AddPage();
 
-            services.AddSingleton<NavigationProvider, NavigationProvider>();
+                services.AddSingleton<NavigationProvider, NavigationProvider>();
+                services.AddTransient<MapPanelComponent, MapPanelComponent>();
+                services.AddTransient<SavePlacePanelComponent, SavePlacePanelComponent>();
+                services.AddTransient<SearchPanelComponent, SearchPanelComponent>();
+                services.AddTransient<PlanRouteComponent, PlanRouteComponent>();
+                services.AddTransient<AddSaveListComponent, AddSaveListComponent>();
+                services.AddTransient<OverViewPage, OverViewPage>();
+                services.AddTransient<CommentPage, CommentPage>();
+                services.AddTransient<TravelPlanInfoPage, TravelPlanInfoPage>();
 
-            services.AddTransient<MapPanelComponent, MapPanelComponent>();
-
-            services.AddTransient<SavePlacePanelComponent, SavePlacePanelComponent>();
-            services.AddTransient<SearchPanelComponent, SearchPanelComponent>();
-            services.AddTransient<PlanRouteComponent, PlanRouteComponent>();
-            services.AddTransient<AddSaveListComponent, AddSaveListComponent>();
 
 
 
-            services.AutoInjectMVP(Assembly.GetExecutingAssembly());
-            services.AutoInjectComponent(Assembly.GetExecutingAssembly());
 
-            //services.AddTransient<Page, CreateTravel>();
-            //services.AddTransient<Page, FavoriteTravel>();
-            provider = services.BuildServiceProvider();
+                services.AutoInjectMVP(Assembly.GetExecutingAssembly());
+                services.AutoInjectComponent(Assembly.GetExecutingAssembly());
 
-            //var repo = provides.GetService<ITravelRepository>();
-            //await repo.GetTravelPlacesAsync(Guid.Parse("52EE1A77-764A-473E-9222-DE738BDC3438"));
+                //services.AddTransient<Page, CreateTravel>();
+                //services.AddTransient<Page, FavoriteTravel>();
+                provider = services.BuildServiceProvider();
 
-            var wpfs = (IEnumerable<Window>)provider.GetService(typeof(IEnumerable<Window>));
-            var wpf = wpfs.FirstOrDefault(x=>x.GetType() == typeof(MainTravelWindow));
-            wpf.Show();
+                //var repo = provides.GetService<ITravelRepository>();
+                //await repo.GetTravelPlacesAsync(Guid.Parse("52EE1A77-764A-473E-9222-DE738BDC3438"));
+
+                var wpfs = (IEnumerable<Window>)provider.GetService(typeof(IEnumerable<Window>));
+                var wpf = wpfs.FirstOrDefault(x => x.GetType() == typeof(MainTravelWindow));
+                wpf.Show();
+            }
+            catch(Exception ex)
+            {
+
+            }
+           
         }
     }
 }

@@ -1,0 +1,156 @@
+﻿<Page
+    x:Class="TravelPlanning.Views.Pages.SearchPlace.Comment.CommentPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:TravelPlanning.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:TravelPlanning.Views.Pages.SearchPlace.Comment"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="CommentPage"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <conv:CommentStarCoverter x:Key="StarConverter" />
+    </Page.Resources>
+
+    <!--  用 Grid 讓 ScrollViewer 撐滿剩餘空間，不會跑到整個視窗  -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer
+            Grid.Row="0"
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Visible">
+
+            <ItemsControl ItemsSource="{Binding Reviews}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+
+                        <Border
+                            Padding="16,14"
+                            Background="White"
+                            BorderBrush="#F0F0F0"
+                            BorderThickness="0,0,0,1">
+                            <StackPanel>
+
+                                <!--  🔹 第一行：頭像 + 姓名 + 更多按鈕  -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--  頭像  -->
+                                    <Border
+                                        Grid.Column="0"
+                                        Width="44"
+                                        Height="44"
+                                        ClipToBounds="True"
+                                        CornerRadius="22">
+                                        <Image Source="{Binding profile_photo_url}" Stretch="UniformToFill" />
+                                    </Border>
+
+                                    <!--  姓名  -->
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Margin="12,0,0,0"
+                                        VerticalAlignment="Center">
+                                        <TextBlock
+                                            FontSize="14"
+                                            FontWeight="SemiBold"
+                                            Foreground="#202124"
+                                            Text="{Binding author_name}" />
+                                    </StackPanel>
+
+                                    <!--  更多 ⋮  -->
+                                    <Button
+                                        Grid.Column="2"
+                                        Width="32"
+                                        Height="32"
+                                        VerticalAlignment="Top"
+                                        BorderThickness="0"
+                                        Cursor="Hand">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border
+                                                    x:Name="Root"
+                                                    Background="Transparent"
+                                                    CornerRadius="16">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="16"
+                                                        Foreground="#5F6368"
+                                                        Text="⋮" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Root" Property="Background" Value="#F1F3F4" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </Grid>
+
+                                <!--  🔹 第二行：★ 星星 + 時間  -->
+                                <StackPanel
+                                    Margin="0,8,0,8"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal">
+
+                                    <TextBlock
+                                        FontSize="15"
+                                        Foreground="#F9AB00"
+                                        Text="{Binding rating, Converter={StaticResource StarConverter}}" />
+
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        Foreground="#5F6368"
+                                        Text="{Binding relative_time_description}" />
+                                </StackPanel>
+
+                                <!--  🔹 第三行：評論內文  -->
+                                <TextBlock
+                                    x:Name="ReviewText"
+                                    MaxHeight="60"
+                                    FontSize="13"
+                                    Foreground="#202124"
+                                    LineHeight="20"
+                                    Text="{Binding text}"
+                                    TextWrapping="Wrap" />
+
+                                <!--  展開/收合 按鈕  -->
+                                <TextBlock
+                                    x:Name="ExpandButton"
+                                    Margin="0,4,0,0"
+                                    Cursor="Hand"
+                                    FontSize="12"
+                                    FontWeight="SemiBold"
+                                    Foreground="#1A73E8"
+                                    MouseLeftButtonDown="ExpandButton_Click"
+                                    Text="查看更多" />
+
+                            </StackPanel>
+                        </Border>
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </ScrollViewer>
+    </Grid>
+
+</Page>

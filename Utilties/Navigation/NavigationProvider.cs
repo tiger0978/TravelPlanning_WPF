@@ -12,6 +12,8 @@ namespace TravelPlanning.Utilties
     public class NavigationProvider
     {
         public ContentControl ContentControl;
+        public Frame Frame;
+
         public Dictionary<Type, UserControl> Pages = new Dictionary<Type, UserControl>();
         private List<TypeInfo> pageItems;
         private readonly IComponentFactory componentFactory;
@@ -20,13 +22,18 @@ namespace TravelPlanning.Utilties
         {
             this.componentFactory = componentFactory;
             pageItems = Assembly.GetExecutingAssembly().DefinedTypes
-              .Where(x => x.FullName.Contains("TravelPlanning.Components.MapPanels"))
+              .Where(x => x.FullName.Contains("TravelPlanning.Components.MapPanels")
+              || x.FullName.Contains("TravelPlanning.Views.Pages.SearchPlace"))
               .ToList();
         }
 
         public void SetControl(ContentControl control) 
         {
             ContentControl = control;
+        }
+        public void SetFrame(Frame frame)
+        {
+            Frame = frame;
         }
 
         public void ClearControl() 
@@ -44,6 +51,17 @@ namespace TravelPlanning.Utilties
             }
             this.ContentControl.Content = userControl;
             return userControl;
+        }
+        public Page NavigatePage(Type pageType, object parm)
+        {
+            var item = pageItems.FirstOrDefault(x => x == pageType);
+            var page = (Page)componentFactory.Create(item);
+            if (parm != null && page.DataContext is INavigationAware aware)
+            {
+                aware.SendAware(parm);
+            }
+            this.Frame.Content = page;
+            return page;
         }
 
         public static List<T> GetPages<T>(string typeNamspace)

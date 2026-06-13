@@ -43,22 +43,25 @@ namespace TravelPlanning.Respositories
             result.MapPlaces = mapPlaces;
             return result;
         }
-
         public async Task<List<MapLayerDAO>> GetMapLayersAsync()
         {
-            var datas = await _db.MapLayers.Select(x => new MapLayerDAO()
-            {
-                IconKey = x.IconKey,
-                Id = x.Id,
-                Name = x.Name,
-                MapPlaces =  x.MapPlaces.Select(y=> new MapPlaceDAO()
+            var datas = await _db.MapLayers
+                .AsNoTracking()
+                .Select(x => new MapLayerDAO()
                 {
-                    Id = y.Id,
-                    Name = y.Name,
-                    MapLayerId = x.Id,
-                    PlaceId = y.PlaceId,
-                }).ToList()
-            }).ToListAsync();
+                    IconKey = x.IconKey,
+                    Id = x.Id,
+                    Name = x.Name,
+                    // 關鍵修改：拿掉尾巴的 .ToList()
+                    MapPlaces = x.MapPlaces.Select(y => new MapPlaceDAO()
+                    {
+                        Id = y.Id,
+                        Name = y.Name,
+                        MapLayerId = x.Id,
+                        PlaceId = y.PlaceId,
+                    })
+                }).ToListAsync(); // 最外層保留一個 ToListAsync 就好
+
             return datas;
         }
 

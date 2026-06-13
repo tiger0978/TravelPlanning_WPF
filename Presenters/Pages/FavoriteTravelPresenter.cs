@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using TravelPlanning.Contracts;
 using TravelPlanning.Contracts.DTOs;
 using TravelPlanning.Models.DTOs;
+using TravelPlanning.Models.Entities;
 using TravelPlanning.Respositories;
 using TravelPlanning.Respositories.Models.DAOs;
 using TravelPlanning.Views.Pages.FavoriteTravel;
@@ -34,12 +35,19 @@ namespace TravelPlanning.Presenters.Pages
         public async Task GetMapLayersAsync()
         {
             var mapLayers = await _mapLayerRepository.GetMapLayersAsync();
-         
         }
 
-        public async Task GetMapPlacesByMapLayerId(Guid mapLayerId)
+        public async Task<List<MapPlaceDTO>> GetMapPlacesByMapLayerId(Guid mapLayerId)
         {
             var mapPlaces = await _mapPlaceRepository.GetMapPlacesByMapperIdAsync(mapLayerId);
+            return mapPlaces
+              .Select(y => new MapPlaceDTO
+              {
+                  Id = y.Id,
+                  MapLayerId = y.MapLayerId,
+                  Name = y.Name,
+                  PlaceId = y.PlaceId,
+              }).ToList();
         }
 
         public async Task CreateMapPlaceAsync(FavoriteTravelDTO favoriteTravelDTO)
@@ -79,5 +87,6 @@ namespace TravelPlanning.Presenters.Pages
                 }).ToList();
             return mapPlaces;
         }
+ 
     }
 }

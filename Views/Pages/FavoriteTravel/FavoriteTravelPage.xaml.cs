@@ -5,15 +5,18 @@ using GoogleMap.SDK.Contracts.GoogleAPI;
 using GoogleMap.SDK.Contracts.GoogleAPI.Models.PlaceDetail.Response;
 using GoogleMap.SDK.UI.WPF;
 using IoC_Container;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using TravelPlanning.Attributes;
-using TravelPlanning.Components.MapPanels;
 using TravelPlanning.Components.MapPanels.AddSavePlaceList;
 using TravelPlanning.Components.MapPanels.PlanRoutePanel;
 using TravelPlanning.Components.MapPanels.SearchPanel;
 using TravelPlanning.Messages;
+using TravelPlanning.Models.DTOs;
 using TravelPlanning.Utilties;
 
 namespace TravelPlanning.Views.Pages.FavoriteTravel
@@ -28,23 +31,29 @@ namespace TravelPlanning.Views.Pages.FavoriteTravel
         public FavoriteTravelContext favoriteTravelContext { get; set; }
         private readonly NavigationProvider _navigationProvider;
         private readonly IGoogleAPIContext _googleAPIContext;
+        private readonly IComponentFactory _componentFactory;
         public FavoriteTravelPage(IComponentFactory componentFactory, IPresenterFactory presenterFactory,
             NavigationProvider navigationProvider, IGMap gmap, IGoogleAPIContext googleAPIContext, FavoriteTravelContext favoriteTravelContext)
         {
             InitializeComponent();
+            _componentFactory = componentFactory;
             _googleAPIContext = googleAPIContext;
             _navigationProvider = navigationProvider;
             this.favoriteTravelContext = favoriteTravelContext;
             _gmap = gmap;
 
         }
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             DataContext = favoriteTravelContext;
             _gmap.OnMarkerClicked += _gmap_OnMarkerClicked;
-            var map = _gmap as UserControl;
-            MapContainer.Children.Add(map);
-            RenderGmapMarkers();
+
+            if(MapContainer.Children.Count ==0) 
+            {
+                var map = _gmap as UserControl;
+                MapContainer.Children.Add(map);
+            }
+            await RenderGmapMarkers();
             WeakReferenceMessenger.Default.Register<PlaceSelectedMessage>(this, (r, m) =>
             {
                 SearchPanel_OnReceivedPlace(m.Value);
@@ -53,9 +62,17 @@ namespace TravelPlanning.Views.Pages.FavoriteTravel
             {
                 AddSaveListPlace_OnLoadPlaces(m);
             });
-            WeakReferenceMessenger.Default.Register<InitialMapOverlayMessage>(this, (r, m) =>
+            WeakReferenceMessenger.Default.Register<InitialMapOverlayMessage>(this, async (r, m) =>
             {
-                RenderGmapMarkers();
+                await RenderGmapMarkers();
+            });
+            WeakReferenceMessenger.Default.Register<HideMapLayerMessage>(this, (r, m) =>
+            {
+                HideMapLayer(m);
+            });
+            WeakReferenceMessenger.Default.Register<DeleteMapLayerMessage>(this, (r, m) =>
+            {
+                DeleteMaplayer(m);
             });
         }
 
@@ -66,44 +83,74 @@ namespace TravelPlanning.Views.Pages.FavoriteTravel
             var currentComponent = _navigationProvider.ContentControl.Content;
             if (currentComponent is AddSaveListComponent || currentComponent is PlanRouteComponent) 
             {
-                popup.PlacementTarget = ((MapPanelComponent)MapPanel.Content).ToggleButton;
+                //var test = MapPanel;
+                //popup.PlacementTarget = ((MapPanelComponent)MapPanel).ToggleButton;
                 popup.Placement = PlacementMode.Right;
+                favoriteTravelContext.PopupContent = _componentFactory.Create<SearchPanelComponent>();
+                var userControl = favoriteTravelContext.PopupContent;
+                var panelContext = ((SearchPanelComponent)userControl).Context;
+                panelContext.RenderModel(data);
+                //((SearchPanelComponent)favoriteTravelContext.PopupContent).Context.RenderModel(data);
                 favoriteTravelContext.IsPopupOpen = true;
-                ((SearchPanelComponent)favoriteTravelContext.PopupContent).Context.RenderModel(data);
             }
             else 
             {
+                favoriteTravelContext.MapPanelContext.ToggleButtonVisibility = Visibility.Visible;
+                //popup.PlacementTarget = ((MapPanelComponent)MapPanel.Content).ToggleButton;
+                //popup.Placement = PlacementMode.Right;
                 var userControl = _navigationProvider.Navigate(typeof(SearchPanelComponent), null);
                 var panelContext = ((SearchPanelComponent)userControl).Context;
                 panelContext.RenderModel(data);
             }
         }
 
-        private async void RenderGmapMarkers() 
+        private async Task RenderGmapMarkers() 
         {
             _gmap.ClearOverlay();
             var mapPlaces = await favoriteTravelContext.GetAllMapPlaces();
-            foreach (var mapPlace in mapPlaces)
-            {
-                var res = await _googleAPIContext.Place.PlaceDetailAsync(mapPlace.PlaceId);
-                CreateMarker(res, mapPlace.MapLayerId.ToString());
-            }
+            CreateMarkers(mapPlaces);
         }
 
-        private async void AddSaveListPlace_OnLoadPlaces(SaveListPlacesLoadedMessage message) 
+        private void AddSaveListPlace_OnLoadPlaces(SaveListPlacesLoadedMessage message) 
         {
             _gmap.ClearOverlay();
-            foreach (var placeId in message.PlaceIds) 
+            var mapPlaces = message.PlaceIds.Select(x => new MapPlaceDTO
             {
-                var res = await _googleAPIContext.Place.PlaceDetailAsync(placeId);
-                CreateMarker(res, message.MapLayerId.ToString());
-            }
+                PlaceId = x,
+                MapLayerId = message.MapLayerId
+            }).ToList();
+            CreateMarkers(mapPlaces);
         }
 
         private void SearchPanel_OnReceivedPlace(PlaceDetailResponse response)
         {
             _gmap.ClearOverlay();
-            CreateMarker(response, "SerachPanel");
+            CreateMarker(response, "MapOverlay");
+        }
+
+        private async void HideMapLayer(HideMapLayerMessage message) 
+        {
+            if (message.IsHidden) 
+            {
+                _gmap.ShowOverlay(message.MapLayerId.ToString());
+            }
+            else 
+            {
+                _gmap.HideOverlay(message.MapLayerId.ToString());
+            }
+        }
+        private async void DeleteMaplayer(DeleteMapLayerMessage message)
+        {
+           _gmap.ClearOverlay(message.MapLayerId.ToString());
+        }
+
+        private async void CreateMarkers(List<MapPlaceDTO> mapPlaces) 
+        {
+            foreach (var mapPlace in mapPlaces)
+            {
+                var res = await _googleAPIContext.Place.PlaceDetailAsync(mapPlace.PlaceId);
+                CreateMarker(res, mapPlace.MapLayerId.ToString());
+            }
         }
 
         private void CreateMarker(PlaceDetailResponse response, string mapLayerName) 
@@ -119,9 +166,7 @@ namespace TravelPlanning.Views.Pages.FavoriteTravel
                 Style = tooltipStyle,
                 DataContext = data
             };
-            _gmap.CreateMarker(response.result.geometry.location.lat, response.result.geometry.location.lng, toolTip: toolTip, data: response);
+            _gmap.CreateMarker(response.result.geometry.location.lat, response.result.geometry.location.lng, mapLayerName, toolTip: toolTip, data: response);
         }
-
-
     }
 }

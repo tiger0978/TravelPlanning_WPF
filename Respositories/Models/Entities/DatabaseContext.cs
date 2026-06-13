@@ -22,8 +22,6 @@ namespace TravelPlanning.Respositories.Models.Entities
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
-           
             modelBuilder.Entity<TravelPlan>()
                 .Property(e => e.Cover)
                 
